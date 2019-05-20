@@ -11,6 +11,13 @@ def route_list():
     return render_template('list.html')
 
 
+@app.route('/add-question', methods=['GET', 'POST'])
+def route_add_question():
+    if request.method == 'POST':
+        return redirect('/list')
+    return render_template('add_question.html')
+
+
 if __name__ == '__main__':
     app.run(
         debug=True,

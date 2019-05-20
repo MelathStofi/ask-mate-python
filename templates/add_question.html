@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Question</title>
+</head>
+<body>
+    <form action="/add-question" method="post">
+        Add Question
+        <p>
+            Question:<br>
+            <input id="question-input" name="question" required maxlength="30">
+        </p>
+        <p>
+            Details:<br>
+            <textarea id="details-input" name="details" rows="5" cols="30"></textarea>
+        </p>
+        <p>
+            <button type="submit">
+                Add Question
+            </button>
+        </p>
+    </form>
+</body>
+</html>
