@@ -11,6 +11,10 @@ def route_list():
     return render_template('list.html')
 
 
+@app.route('/question/<question_id>')
+def display_question(question_id):
+    return render_template('question.html', question_id =question_id)
+
 if __name__ == '__main__':
     app.run(
         debug=True,
