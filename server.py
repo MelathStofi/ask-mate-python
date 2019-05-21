@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/list')
 def route_list():
-    every_questions = connection.get_all_data()
+    every_questions = connection.get_all_questions()
 
     return render_template('list.html', every_questions=every_questions)
 
@@ -17,7 +17,6 @@ def route_list():
 @app.route('/question/<question_id>')
 def display_question(question_id):
     question = data_manager.get_question_by_id(question_id)
-
     return render_template('question.html', question =question)
 
 @app.route('/add-question', methods=['GET', 'POST'])
