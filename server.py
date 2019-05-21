@@ -17,13 +17,19 @@ def route_list():
 def display_question(question_id):
     question = data_manager.get_question_by_id(question_id)
 
-    return render_template('question.html', question =question)
+    return render_template('question.html', question=question)
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
 def route_add_question():
     if request.method == 'POST':
+        question = {
+            'title': request.form['title'],
+            'message': request.form['message']
+        }
+        data_manager.add_question(question)
         return redirect('/list')
+
     return render_template('add_question.html')
 
 
