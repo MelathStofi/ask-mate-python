@@ -16,7 +16,9 @@ def route_list():
 
 @app.route('/question/<question_id>')
 def display_question(question_id):
-    return render_template('question.html', question_id =question_id)
+    question = data_manager.get_question_by_id(question_id)
+
+    return render_template('question.html', question =question)
 
 @app.route('/add-question', methods=['GET', 'POST'])
 def route_add_question():
