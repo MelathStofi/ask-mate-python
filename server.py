@@ -13,11 +13,11 @@ def route_list():
     return render_template('list.html', every_questions=every_questions)
 
 
-
 @app.route('/question/<question_id>')
 def display_question(question_id):
     question = data_manager.get_question_by_id(question_id)
     return render_template('question.html', question =question)
+
 
 @app.route('/add-question', methods=['GET', 'POST'])
 def route_add_question():
@@ -30,7 +30,7 @@ def route_add_question():
 def route_post_answer(question_id):
     if request.method == 'POST':
         return redirect("/list")
-    return render_template("post_answer.html")
+    return render_template("post_answer.html", question_id=question_id)
 
 
 if __name__ == '__main__':
