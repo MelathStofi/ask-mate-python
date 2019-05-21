@@ -24,7 +24,7 @@ def route_add_question():
 def route_post_answer(question_id):
     if request.method == 'POST':
         return redirect("/list")
-    return render_template("post_amswer.html")
+    return render_template("post_answer.html")
 
 
 if __name__ == '__main__':
