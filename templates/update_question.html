@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Question</title>
+</head>
+<body>
+    <form action="/update-question/{{ question_id }}" method="post">
+        <i>Update Question</i>
+        <p>
+            Question:<br>
+            <input id="question-input" name="title" required maxlength="30" size="50" value="{{ update_question_row['title'] }}">
+        </p>
+        <p>
+            Details:<br>
+            <textarea id="details-input" name="message" rows="10" cols="50">{{ update_question_row['message'] }}</textarea>
+        </p>
+        <p>
+            <input id="image-input" name="image" size="30">
+        </p>
+        <p>
+            <button type="submit">
+                Update Question
+            </button>
+        </p>
+    </form>
+</body>
+</html>
