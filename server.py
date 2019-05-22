@@ -3,13 +3,11 @@ import data_manager
 
 app = Flask(__name__)
 
-
 @app.route('/')
 @app.route('/list')
 def route_list():
     every_questions = data_manager.get_all_questions()
-    return render_template('list.html',
-                           every_questions=every_questions)
+    return render_template('list.html', every_questions=every_questions)
 
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
@@ -41,6 +39,22 @@ def route_add_answer(question_id):
                            question_id=question_id)
 
 
+
+@app.route("/question/<question_id>/vote-up", methods=["GET", "POST"])
+@app.route("/question/<question_id>/vote-down", methods=["GET", "POST"])
+def voting(question_id):
+    question = data_manager.get_question_by_id(question_id)
+    vote = int(question['vote_number'])
+    print(question)
+    print(vote)
+    if 'vote-up' in str(request.url_rule):
+        vote +=1
+    elif 'vote-down' in str(request.url_rule):
+        vote -= 1
+    data_manager.wr
+
+    return render_template("question.html", question=question)
+
 @app.route('/update-question/<question_id>', methods=['GET','POST'])
 def update_question(question_id):
     if request.method == 'POST':
@@ -58,6 +72,7 @@ def update_question(question_id):
     return render_template('update_question.html',
                            question_id=question_id,
                            update_question_row=update_question_row)
+
 
 
 if __name__ == '__main__':
