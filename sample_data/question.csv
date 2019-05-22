@@ -15,3 +15,10 @@ This is the code I'm using to draw the image (that works on web/desktop but not 
 4,,,9,sadsdsadsd,asdsadsadsad,
 5,,,9,Mi az élet értelme?,42!,
 6,,,9,asdasdas,asdsagfgdt,
+
+2,test,123,456,Drawing canvas with an image picked with Cordova Camera Plugin,"I'm getting an image from device and drawing a canvas with filters using Pixi JS. It works all well using computer to get an image. But when I'm on IOS, it throws errors such as cross origin issue, or that I'm trying to use an unknown format.
+This is the code I'm using to draw the image (that works on web/desktop but not cordova built ios app)",12312312312
+4,,,,sadsdsadsd,asdsadsadsad,
+5,,,,Mi az élet értelme?,42!,
+6,test,123,456,nem asdasd,kaki,
+
