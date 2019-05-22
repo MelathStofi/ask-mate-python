@@ -5,7 +5,7 @@
     <title>Add Answer</title>
 </head>
 <body>
-    <form action="/question/<question_id>/new-answer" method="post">
+    <form action="/question/{{ question_id }}/new-answer" method="post">
         <p>Answer:<br>
         <textarea rows="5" cols="30" name="answer" required minlength="10"></textarea>
         </p>

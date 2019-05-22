@@ -12,16 +12,14 @@ def get_question_by_id(_id):
     questions = connection.get_all_data(questions_data)
     for question in questions:
         if question['id'] == _id:
-            result = question
-
-    return result
+            return question
 
 
 def get_answers_by_id(_id):
     all_answers = connection.get_all_data(answers_data)
     answers_by_id = []
     for answer in all_answers:
-        if answer['id'] == _id:
+        if answer['question_id'] == _id:
             answers_by_id.append(answer)
 
     return answers_by_id
@@ -32,5 +30,12 @@ def add_question(question):
     all_questions = connection.get_all_data(questions_data)
     question['id'] = len(all_questions) + 1
     all_questions.append(question)
-    connection.write_question_to_file(all_questions, header)
-    print(all_questions)
+    connection.write_data_to_file(questions_data, all_questions, header)
+
+
+def add_answer(answer, question_id):
+    header = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
+    all_answers = connection.get_all_data(answers_data)
+    answer['question_id'] = question_id
+    all_answers.append(answer)
+    connection.write_data_to_file(answers_data, all_answers, header)

@@ -11,17 +11,18 @@
     <h4>Question:</h4><br>
         {{ question['message'] }}
     <p>
-        <table>
-            <thead><tr><th><h4>Answers:</h4></th></tr></thead>
+        <table border="2" cellpadding="10">
+        <thead><tr><th><h4>Answers:</h4></th></tr></thead>
             <tbody>
                 {% for row in answers %}
-                    <tr>
-                        <td>{{ row['message'] }}</td>
-                        <td>{{ row['image'] if answers['image'] }}</td>
-                    </tr>
+                    <tr><td>{{ row['message'] }}</td>
+                    <td>{{ row['image'] if answers['image'] }}</td></tr>
                 {% endfor %}
             </tbody>
         </table>
+    </p>
+    <p>
+        <a href="/question/{{ question['id'] }}/new-answer"">Add new answer</a>
     </p>
 </body>
 </html>
