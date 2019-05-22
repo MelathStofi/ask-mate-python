@@ -59,3 +59,18 @@ def get_data_row(row_id):
     for row in range(len(questions)):
         if questions[row]['id'] == row_id:
             return questions[row]
+
+def voting(question_id, vote_act):
+    questions = get_all_questions()
+    for question in questions:
+        if question["id"] == question_id:
+            v = int(question['vote_number'])
+            k = int(v)
+            if vote_act == 1:
+                k += 1
+            elif vote_act == -1:
+                k -= 1
+        question['vote_number'] = k
+
+
+    return connection.write_data_to_file(questions_data, questions, header)
