@@ -9,6 +9,7 @@ def get_all_questions():
 
 
 def get_question_by_id(_id):
+    result = ''
     questions = connection.get_all_data(questions_data)
     for question in questions:
         if question['id'] == _id:

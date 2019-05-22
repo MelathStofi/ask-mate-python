@@ -9,8 +9,8 @@
     <h2>{{ question['title'] }}</h2><br>
         Views: {{ question['view_number'] }}<br>
 
-    Votes: {{ question['vote_number'] }}  <button><a href="/question/<question_id>/vote-up">Vote up</a></button>
-    <button><a href="/question/<question_id>/vote-down">Vote down</a></button><br>
+    Votes: {{ question['vote_number'] }}  <button><a href="/question/{{question['id']}}/vote-up">Vote up</a></button>
+    <button><a href="/question/{{question['id']}}/vote-down">Vote down</a></button><br>
 
         Votes: {{ question['vote_number'] }}<br>
         <a href="/update-question/{{ question['id'] }}">Update this question</a><br>
