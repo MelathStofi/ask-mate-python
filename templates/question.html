@@ -5,9 +5,11 @@
     <title>Title</title>
 </head>
 <body>
+
     <h2>{{ question['title'] }}</h2><br>
         Views: {{ question['view_number'] }}<br>
         Votes: {{ question['vote_number'] }}<br>
+        <a href="/update-question/{{ question['id'] }}">Update this question</a><br>
     <h4>Question:</h4><br>
         {{ question['message'] }}
     <p>
