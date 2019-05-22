@@ -5,12 +5,23 @@
     <title>Title</title>
 </head>
 <body>
-<h1>{{ question['title'] }}</h1><br>
-Submited: {{ question['submission_time '] }}<br>
-Views: {{ question['view_number'] }}<br>
-Votes: {{ question['vote_number'] }}<br>
-<h2>Question:</h2><br>
-{{ question['message'] }}
-
+    <h2>{{ question['title'] }}</h2><br>
+        Views: {{ question['view_number'] }}<br>
+        Votes: {{ question['vote_number'] }}<br>
+    <h4>Question:</h4><br>
+        {{ question['message'] }}
+    <p>
+        <table>
+            <thead><tr><th><h4>Answers:</h4></th></tr></thead>
+            <tbody>
+                {% for row in answers %}
+                    <tr>
+                        <td>{{ row['message'] }}</td>
+                        <td>{{ row['image'] if answers['image'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </p>
 </body>
 </html>
