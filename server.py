@@ -33,6 +33,7 @@ def route_add_question():
     return render_template('add_question.html')
 
 
+
 @app.route("/question/<question_id>/new-answer", methods=["GET", "POST"])
 def route_post_answer(question_id):
     if request.method == 'POST':
