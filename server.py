@@ -41,6 +41,25 @@ def route_add_answer(question_id):
                            question_id=question_id)
 
 
+@app.route('/update-question/<question_id>', methods=['GET','POST'])
+def update_question(question_id):
+    if request.method == 'POST':
+        updated_question = {'id': question_id,
+                            'submission_time' : "test",
+                            'view_number' : "123",
+                            'vote_number': "456"}
+        print("update q", update_question)
+        updated_question.update(request.form)
+        print("updated Q", update_question)
+        data_manager.update_story(updated_question)
+        return redirect('/')
+
+    update_question_row = data_manager.get_data_row(question_id)
+    return render_template('update_question.html',
+                           question_id=question_id,
+                           update_question_row=update_question_row)
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
