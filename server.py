@@ -70,6 +70,8 @@ def route_update_question(question_id):
 @app.route("/question/<question-id>", methods=["GET"])
 def count_views():
     if request.method == "GET":
+        data_manager.count_views()
+    return redirect(url_for("display_question", question_id=question['id']))
 
 
 if __name__ == '__main__':
