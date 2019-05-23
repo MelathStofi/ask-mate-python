@@ -1,4 +1,7 @@
 id,submission_time,vote_number,question_id,message,image
+<<<<<<< HEAD
+2,201959213710,0,3,i think it is the basic ssj form ,
+=======
 0,1493398154,4,0,You need to use brackets: my_list = [],
 1,1493088154,35,0,Look it up in the Python docs,
 ,,,5,sefewfewfwfewerewrewrer,
@@ -11,5 +14,11 @@ id,submission_time,vote_number,question_id,message,image
 ,,,5,uz7tzrzrzrzrzr,
 ,,,5,nem is igaz,
 ,,,2,asdsadasdasd,
+,,,8,asdasdasdas,
+,,,8,dsdasddasd,
+,,,8,asdasdasdasdasd,
+,1558602352,,12,ez egy answer a tesztelés 3hoz,
+14,1558602506,,12,adj egy id-t,
 
 ",
+>>>>>>> a23e39de59e156a25504b9012ac353efb24bba44
