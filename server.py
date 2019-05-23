@@ -68,6 +68,10 @@ def route_update_question(question_id):
                            question_id=question_id,
                            update_question_row=update_question_row)
 
+@app.route("/question/<question-id>", methods=["GET"])
+def count_views():
+    if request.method == "GET":
+
 
 if __name__ == '__main__':
     app.run(
