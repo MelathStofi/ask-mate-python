@@ -8,6 +8,9 @@
     <h1><i><a href="/list"><h1>AskMate</a></i></h1>
     <form action="/update-question/{{ question_id }}" method="post">
         <i>Update Question</i>
+        <p>Time: {{ update_question_row['submission_time'] }}</p>
+        <p>View Number: {{ update_question_row['view_number'] }}</p>
+        <p>Vote Number: {{ update_question_row['vote_number'] }}</p>
         <p>
             Question:<br>
             <input id="question-input" name="title" required maxlength="30" size="50" value="{{ update_question_row['title'] }}">
