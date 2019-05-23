@@ -5,7 +5,7 @@
         <title>AskMate</title>
     </head>
     <body>
-        <h1><i>AskMate</i></h1>
+        <h1><i><a href="/list"><h1>AskMate</a></i></h1>
         <p><a href="/add-question"><h3>Ask new question</h3>    </a></p>
             <table border="1" cellpadding="10">
                 <thead>
@@ -14,8 +14,22 @@
                     </tr>
                 </thead>
                 <tbody>
-
-                    {% for question in every_questions[::-1] %}
+                <form action="list.html" method="get">
+                    <select name="order_by">
+                        <option name="default">-Order by:</option>
+                        <option name="time">Date</option>
+                        <option name="view">View Numbers</option>
+                        <option name="vote">Votes</option>
+                        <option name="title">Question Name</option>
+                    </select>
+                    <select name="order_dir">
+                        <option name="default">-Order in:</option>
+                        <option name="asc">Ascending</option>
+                        <option name="desc">Descending</option>
+                    </select>
+                    <button type="submit">Sort it mate!</button>
+                </form>
+                    {% for question in every_questions[::1] %}
                         <tr>
                             <td><a href="/question/{{ question['id'] }}">{{ question['title'] }}</a></td>
                         </tr>

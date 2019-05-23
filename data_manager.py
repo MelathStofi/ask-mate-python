@@ -12,7 +12,6 @@ def get_all_questions():
 
 
 def get_question_by_id(_id):
-    result = ''
     questions = connection.get_all_data(questions_data)
     for question in questions:
         if question['id'] == _id:
@@ -25,7 +24,6 @@ def get_answers_by_id(_id):
     for answer in all_answers:
         if answer['question_id'] == _id:
             answers_by_id.append(answer)
-
     return answers_by_id
 
 
@@ -71,18 +69,15 @@ def get_data_row(row_id):
 
 
 def voting(question_id, vote_act):
-    k = 0
+    v = None
     questions = get_all_questions()
     for question in questions:
         if question["id"] == question_id:
             v = int(question['vote_number'])
-            k = int(v)
             if vote_act == 1:
-                k += 1
+                v += 1
             elif vote_act == -1:
-                k -= 1
-        question['vote_number'] = k
-
-
+                v -= 1
+        question['vote_number'] = v
     return connection.write_data_to_file(questions_data, questions, header)
 
