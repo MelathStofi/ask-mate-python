@@ -37,7 +37,8 @@ def route_add_question():
 @app.route("/question/<question_id>/new-answer", methods=["GET", "POST"])
 def route_add_answer(question_id):
     if request.method == 'POST':
-        answer = {'message': request.form['answer']}
+        answer = {'message': request.form['answer'],
+                  'image': request.form['image']}
         data_manager.add_answer(answer, question_id)
         return redirect("/list")
     return render_template("add_answer.html",
