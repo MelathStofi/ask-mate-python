@@ -1,5 +1,6 @@
 import connection
 import time
+from operator import itemgetter
 
 timestamp = int(time.time())
 questions_data = "sample_data/question.csv"
@@ -90,6 +91,15 @@ def voting(question_id, vote_act):
     return connection.write_data_to_file(questions_data, questions, header)
 
 
-def sorting_table(order_by, order_in):
+def sorting_table(order_by=None, order_in=None):
+    print(itemgetter(order_by))
     questions = connection.get_all_data(questions_data)
-    pass
+    if order_by is None and order_in is None:
+        return questions
+    else:
+        if order_in == "desc":
+            sorted_questions = sorted(questions, key=itemgetter(order_by), reverse=False)
+            return sorted_questions
+        elif order_in == "asc":
+            sorted_questions = sorted(questions, key=itemgetter(order_by), reverse=True)
+            return sorted_questions

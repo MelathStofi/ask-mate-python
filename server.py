@@ -5,9 +5,12 @@ app = Flask(__name__)
 
 
 @app.route('/')
-@app.route('/list')
+@app.route('/list', methods=['GET'])
 def route_list():
-    every_question = data_manager.get_all_questions()
+    order_by = request.args.get('order_by')
+    order_in = request.args.get('order_in')
+    every_question = data_manager.sorting_table(order_by, order_in)
+    print(every_question)
     return render_template('list.html', every_question=every_question)
 
 
