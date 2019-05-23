@@ -44,14 +44,10 @@ def route_add_answer(question_id):
 @app.route("/question/<question_id>/vote-down", methods=["GET", "POST"])
 def route_voting(question_id):
     question = data_manager.get_question_by_id(question_id)
-    vote = int(question['vote_number'])
-    print(question)
-    print(vote)
     if 'vote-up' in str(request.url_rule):
-        vote +=1
+        data_manager.voting(question_id, 1)
     elif 'vote-down' in str(request.url_rule):
-        vote -= 1
-    data_manager.wr
+        data_manager.voting(question_id, -1)
 
     return render_template("question.html", question=question)
 
