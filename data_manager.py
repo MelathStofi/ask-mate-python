@@ -10,7 +10,6 @@ def get_all_questions():
 
 
 def get_question_by_id(_id):
-    result = ''
     questions = connection.get_all_data(questions_data)
     for question in questions:
         if question['id'] == _id:
@@ -23,7 +22,6 @@ def get_answers_by_id(_id):
     for answer in all_answers:
         if answer['question_id'] == _id:
             answers_by_id.append(answer)
-
     return answers_by_id
 
 
@@ -35,11 +33,11 @@ def add_question(question):
 
 
 def add_answer(answer, question_id):
-    header = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
+    answer_header = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
     all_answers = connection.get_all_data(answers_data)
     answer['question_id'] = question_id
     all_answers.append(answer)
-    connection.write_data_to_file(answers_data, all_answers, header)
+    connection.write_data_to_file(answers_data, all_answers, answer_header)
 
 
 def count_data_lines(data_file):
@@ -55,7 +53,6 @@ def update_story(updated_question):
     for row in range(len(questions)):
         if questions[row]['id'] == updated_question['id']:
             questions[row] = updated_question
-            print("Questions row",questions[row])
     return connection.write_data_to_file('sample_data/question.csv', questions, header)
 
 
@@ -67,17 +64,15 @@ def get_data_row(row_id):
 
 
 def voting(question_id, vote_act):
+    v = None
     questions = get_all_questions()
     for question in questions:
         if question["id"] == question_id:
             v = int(question['vote_number'])
-            k = int(v)
             if vote_act == 1:
-                k += 1
+                v += 1
             elif vote_act == -1:
-                k -= 1
-        question['vote_number'] = k
-
-
+                v -= 1
+        question['vote_number'] = v
     return connection.write_data_to_file(questions_data, questions, header)
 
