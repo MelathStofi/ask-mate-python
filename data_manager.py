@@ -76,3 +76,7 @@ def voting(question_id, vote_act):
         question['vote_number'] = v
     return connection.write_data_to_file(questions_data, questions, header)
 
+
+def sorting_table(order_by, order_in):
+    questions = connection.get_all_data(questions_data)
+    pass
