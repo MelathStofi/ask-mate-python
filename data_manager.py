@@ -66,7 +66,7 @@ def get_data_row(row_id):
 
 
 def voting(question_id, vote_act):
-    v = None
+    v = 0
     questions = get_all_questions()
     for question in questions:
         if question["id"] == question_id:
