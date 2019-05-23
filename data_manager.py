@@ -55,7 +55,6 @@ def update_story(updated_question):
     for row in range(len(questions)):
         if questions[row]['id'] == updated_question['id']:
             questions[row] = updated_question
-            print("Questions row",questions[row])
     return connection.write_data_to_file('sample_data/question.csv', questions, header)
 
 
@@ -67,6 +66,7 @@ def get_data_row(row_id):
 
 
 def voting(question_id, vote_act):
+    k = 0
     questions = get_all_questions()
     for question in questions:
         if question["id"] == question_id:
