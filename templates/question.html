@@ -12,11 +12,17 @@
     Votes: {{ question['vote_number'] }}  <button><a href="/question/{{question['id']}}/vote-up">Vote up</a></button>
     <button><a href="/question/{{question['id']}}/vote-down">Vote down</a></button><br>
 
-        <a href="/update-question/{{ question['id'] }}">Update this question</a><br>
+        <a href="/edit/{{ question['id'] }}">Update this question</a><br>
 
     <h4>Question:</h4><br>
         {{ question['message'] }}
+     <p>
+        Image:<br>
+
+         <img src="{{ question['image'] }}" height="200" width="300">
+    </p>
     <p>
+
         <table border="2" cellpadding="10">
         <thead><tr><th><h4>Answers:</h4></th></tr></thead>
             <tbody>

@@ -26,7 +26,8 @@ def route_add_question():
         question = {'view_number': "0",
                     'vote_number': "0",
                     'title': request.form['title'],
-                    'message': request.form['message']}
+                    'message': request.form['message'],
+                    'image': request.form['image']}
         data_manager.add_question(question)
         return redirect('/list')
     return render_template('add_question.html')
@@ -53,7 +54,7 @@ def route_voting(question_id):
     return redirect(url_for("route_display_question", question_id=question['id']))
 
 
-@app.route('/update-question/<question_id>', methods=['GET','POST'])
+@app.route('/edit/<question_id>', methods=['GET','POST'])
 def route_update_question(question_id):
     if request.method == 'POST':
         updated_question = {'id': question_id}
@@ -63,7 +64,7 @@ def route_update_question(question_id):
         return redirect('/')
 
     update_question_row = data_manager.get_data_row(question_id)
-    return render_template('update_question.html',
+    return render_template('edit.html',
                            question_id=question_id,
                            update_question_row=update_question_row)
 
