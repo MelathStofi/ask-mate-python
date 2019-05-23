@@ -3,6 +3,7 @@ import data_manager
 
 app = Flask(__name__)
 
+
 @app.route('/')
 @app.route('/list')
 def route_list():
@@ -29,7 +30,6 @@ def route_add_question():
     return render_template('add_question.html')
 
 
-
 @app.route("/question/<question_id>/new-answer", methods=["GET", "POST"])
 def route_add_answer(question_id):
     if request.method == 'POST':
@@ -38,7 +38,6 @@ def route_add_answer(question_id):
         return redirect("/list")
     return render_template("add_answer.html",
                            question_id=question_id)
-
 
 
 @app.route("/question/<question_id>/vote-up", methods=["GET", "POST"])
@@ -51,6 +50,7 @@ def vote(question_id):
         data_manager.voting(question_id, -1)
 
     return render_template("question.html", question=question)
+
 
 @app.route('/update-question/<question_id>', methods=['GET','POST'])
 def update_question(question_id):
@@ -69,7 +69,6 @@ def update_question(question_id):
     return render_template('update_question.html',
                            question_id=question_id,
                            update_question_row=update_question_row)
-
 
 
 if __name__ == '__main__':

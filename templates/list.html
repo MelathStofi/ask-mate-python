@@ -14,8 +14,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                <form>
-                    <div></div>
+                <form action="list.html" method="get">
+                    <select name="order_by">
+                        <option name="default">-Order by:</option>
+                        <option name="time">Date</option>
+                        <option name="view">View Numbers</option>
+                        <option name="vote">Votes</option>
+                        <option name="title">Question Name</option>
+                    </select>
+                    <select name="order_dir">
+                        <option name="default">-Order in:</option>
+                        <option name="asc">Ascending</option>
+                        <option name="desc">Descending</option>
+                    </select>
+                    <button type="submit">Sort it mate!</button>
                 </form>
                     {% for question in every_questions[::1] %}
                         <tr>
