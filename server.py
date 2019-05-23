@@ -7,12 +7,12 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/list')
 def route_list():
-    every_questions = data_manager.get_all_questions()
-    return render_template('list.html', every_questions=every_questions)
+    every_question = data_manager.get_all_questions()
+    return render_template('list.html', every_question=every_question)
 
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
-def display_question(question_id):
+def route_display_question(question_id):
     question = data_manager.get_question_by_id(question_id)
     answers = data_manager.get_answers_by_id(question_id)
     return render_template('question.html',
