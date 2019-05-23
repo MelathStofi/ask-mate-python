@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="static/liststyle.css">
 </head>
 <body>
     <h1><i><a href="/list"><h1>AskMate</a></i></h1>
@@ -12,17 +13,24 @@
     Votes: {{ question['vote_number'] }}  <button><a href="/question/{{question['id']}}/vote-up">Vote up</a></button>
     <button><a href="/question/{{question['id']}}/vote-down">Vote down</a></button><br>
 
-        <a href="/update-question/{{ question['id'] }}">Update this question</a><br>
+        <a href="/edit/{{ question['id'] }}">Update this question</a><br>
 
     <h4>Question:</h4><br>
         {{ question['message'] }}
+     <p>
+        Image:<br>
+
+         <img src="{{ question['image'] }}" height="200" width="300">
+    </p>
     <p>
+
         <table border="2" cellpadding="10">
         <thead><tr><th><h4>Answers:</h4></th></tr></thead>
             <tbody>
                 {% for row in answers %}
                     <tr><td>{{ row['message'] }}</td>
-                    <td>{{ row['image'] if answers['image'] }}</td></tr>
+                        <td><img src="{{ row['image'] }}" height="200" width="300"></td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>

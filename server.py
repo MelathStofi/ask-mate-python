@@ -18,6 +18,7 @@ def route_list():
 def route_display_question(question_id):
     question = data_manager.get_question_by_id(question_id)
     answers = data_manager.get_answers_by_id(question_id)
+    #data_manager.count_views(question_id, 1)
     return render_template('question.html',
                            question=question,
                            answers=answers)
@@ -29,7 +30,8 @@ def route_add_question():
         question = {'view_number': "0",
                     'vote_number': "0",
                     'title': request.form['title'],
-                    'message': request.form['message']}
+                    'message': request.form['message'],
+                    'image': request.form['image']}
         data_manager.add_question(question)
         return redirect('/list')
     return render_template('add_question.html')
@@ -38,7 +40,8 @@ def route_add_question():
 @app.route("/question/<question_id>/new-answer", methods=["GET", "POST"])
 def route_add_answer(question_id):
     if request.method == 'POST':
-        answer = {'message': request.form['answer']}
+        answer = {'message': request.form['answer'],
+                  'image': request.form['image']}
         data_manager.add_answer(answer, question_id)
         return redirect("/list")
     return render_template("add_answer.html",
@@ -53,10 +56,11 @@ def route_voting(question_id):
         data_manager.voting(question_id, 1)
     elif 'vote-down' in str(request.url_rule):
         data_manager.voting(question_id, -1)
+    #data_manager.count_views(question_id, -1)
     return redirect(url_for("route_display_question", question_id=question['id']))
 
 
-@app.route('/update-question/<question_id>', methods=['GET','POST'])
+@app.route('/edit/<question_id>', methods=['GET','POST'])
 def route_update_question(question_id):
     if request.method == 'POST':
         updated_question = {'id': question_id}
@@ -66,7 +70,7 @@ def route_update_question(question_id):
         return redirect('/')
 
     update_question_row = data_manager.get_data_row(question_id)
-    return render_template('update_question.html',
+    return render_template('edit.html',
                            question_id=question_id,
                            update_question_row=update_question_row)
 
@@ -74,6 +78,6 @@ def route_update_question(question_id):
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
-        port=8000,
+        port=3000,
         debug=True
     )
