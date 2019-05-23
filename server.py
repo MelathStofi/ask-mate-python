@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, url_for
 import data_manager
 
 app = Flask(__name__)
@@ -48,7 +48,7 @@ def route_voting(question_id):
         data_manager.voting(question_id, 1)
     elif 'vote-down' in str(request.url_rule):
         data_manager.voting(question_id, -1)
-    redirect(url_for)
+    return redirect(url_for("display_question", question_id = question['id']))
 
 
 
