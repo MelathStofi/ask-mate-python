@@ -1,5 +1,5 @@
 id,submission_time,view_number,vote_number,title,message,image
-0,1493368154,29,0,How to make lists in Python?,"I am totally new to this, any hints?",
+0,1493368154,30,0,How to make lists in Python?,"I am totally new to this, any hints?",
 1,1493068124,15,0,Wordpress loading multiple jQuery Versions,"I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $('.myBook').booklet();
 
 I could easy managing the loading order with wp_enqueue_script so first I load jquery then I load booklet so everything is fine.
@@ -18,8 +18,12 @@ app.js (bundled file with webpack, including jquery)",images/image1.png
 8,1558601226.425393,0,0,gyöööööööörgy,asdasdasdasdadsaas,
 9,1558601854.8595462,0,0,jurassic park,asdasdasd,
 10,1558601926,0,0,testelés,asdasdasdas,
-11,1558602274,0,0,tesztelés 2 ,asdasasdaséfsdélmsdédlhmsdélmhsdlémgésdmhésdlmhélsmhélm,
+11,1558602274,1,0,tesztelés 2 ,asdasasdaséfsdélmsdédlhmsdélmhsdlémgésdmhésdlmhélsmhélm,
 12,,,0,tesztelés 3 answerrel együttdd,dsasdasdasdsa,asd
 13,,,0,tesztelés 4 updated now,asdasdadsadasdasfleksnhwnhanwrhknwrknbbbbbbbbbbbbbbbbbbbbbbbbb,bbbbbb
+<<<<<<< HEAD
+14,1558610765,21,12,szeretném ha most az update is működne,ez egy update tesztelésdasdasdasdasdasdas,dadsadas
+=======
 14,1558610765,25,0,szeretném ha most az update is működne,ez egy update tesztelésdasdasdasdasdasdas,dadsadas
 15,1558617852,11,4,view teszt,asdasdasdasdasdsa,http://ebmester.hu/sites/default/files/styles/max_325x325/public/2018-02/pomer%C3%A1niai%20t%C3%B6rpe%20spitz.jpg?itok=iUUugovR
+>>>>>>> master
