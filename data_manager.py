@@ -57,7 +57,9 @@ def update_story(updated_question):
 
     for row in range(len(questions)):
         if questions[row]['id'] == updated_question['id']:
-            questions[row] = updated_question
+            questions[row]['title'] = updated_question['title']
+            questions[row]['message'] = updated_question['message']
+            questions[row]['image'] = updated_question['image']
     return connection.write_data_to_file('sample_data/question.csv', questions, header)
 
 
