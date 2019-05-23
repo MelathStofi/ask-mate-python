@@ -95,7 +95,10 @@ def count_views(question_id, increment):
     for question in questions:
         if question["id"] == question_id:
             view = question['view_number']
-            view = int(view)
+            try:
+                view = int(view)
+            except:
+                view = 0
             view += increment
             question["view_number"] = str(view)
 
