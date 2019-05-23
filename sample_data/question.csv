@@ -1,5 +1,4 @@
 id,submission_time,view_number,vote_number,title,message,image
-<<<<<<< HEAD
 0,1493368154,29,9,How to make lists in Python?,"I am totally new to this, any hints?",
 1,1493068124,15,9,Wordpress loading multiple jQuery Versions,"I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $('.myBook').booklet();
 
@@ -21,19 +20,10 @@ This is the code I'm using to draw the image (that works on web/desktop but not 
 4,,,,sadsdsadsd,asdsadsadsad,
 5,,,,Mi az élet értelme?,42!,
 6,test,123,456,nem asdasd,kaki,
-<<<<<<< HEAD,,,,,,
 7,,,,zjikug,,
-=======,,,,,,
->>>>>>> master,,,,,,
 15,,,,Krvtrcwxerc2er2crcr,fc4rd4dr4d4rdr4rd45d,
-=======
-<<<<<<< HEAD
-0,1493368154,29,,How to make lists in Python?,"I am totally new to this, any hints?",
-1,1493068124,15,,Wordpress loading multiple jQuery Versions,"I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $('.myBook').booklet();
-=======
 0,1493368154,29,0,How to make lists in Python?,"I am totally new to this, any hints?",
 1,1493068124,15,0,Wordpress loading multiple jQuery Versions,"I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $('.myBook').booklet();
->>>>>>> acce788a73fe33f2569a863c7ec901eb244dfd8a
 
 I could easy managing the loading order with wp_enqueue_script so first I load jquery then I load booklet so everything is fine.
 
@@ -64,4 +54,3 @@ This is the code I'm using to draw the image (that works on web/desktop but not 
 4,,,463,sadsdsadsd,asdsadsadsad,
 5,,,463,Mi az élet értelme?,42!,
 6,test,123,463,nem asdasd,kaki,
->>>>>>> master
