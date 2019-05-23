@@ -89,16 +89,17 @@ def voting(question_id, vote_act):
 
     return connection.write_data_to_file(questions_data, questions, header)
 
-def count_views(question_id):
+
+def count_views(question_id, increment):
     view = None
     questions = get_all_questions()
     for question in questions:
         if question["id"] == question_id:
             view = question['view_number']
             view = int(view)
-            view += 1
+            view += increment
             question["view_number"] = str(view)
 
-
     return connection.write_data_to_file(questions_data, questions, header)
+
 
