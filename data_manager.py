@@ -1,5 +1,7 @@
 import connection
+import time
 
+timestamp = int(time.time())
 questions_data = "sample_data/question.csv"
 answers_data = "sample_data/answer.csv"
 header = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
@@ -28,6 +30,7 @@ def get_answers_by_id(_id):
 def add_question(question):
     all_questions = connection.get_all_data(questions_data)
     question['id'] = len(all_questions) + 1
+    question['submission_time'] = timestamp
     all_questions.append(question)
     connection.write_data_to_file(questions_data, all_questions, header)
 
@@ -35,7 +38,9 @@ def add_question(question):
 def add_answer(answer, question_id):
     answer_header = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
     all_answers = connection.get_all_data(answers_data)
+    answer['id'] = len(all_answers) + 1
     answer['question_id'] = question_id
+    answer['submission_time'] = timestamp
     all_answers.append(answer)
     connection.write_data_to_file(answers_data, all_answers, answer_header)
 

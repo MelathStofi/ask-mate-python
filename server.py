@@ -23,7 +23,9 @@ def display_question(question_id):
 @app.route('/add-question', methods=['GET', 'POST'])
 def route_add_question():
     if request.method == 'POST':
-        question = {'title': request.form['title'],
+        question = {'view_number': "0",
+                    'vote_number': "0",
+                    'title': request.form['title'],
                     'message': request.form['message']}
         data_manager.add_question(question)
         return redirect('/list')
@@ -48,17 +50,14 @@ def route_voting(question_id):
         data_manager.voting(question_id, 1)
     elif 'vote-down' in str(request.url_rule):
         data_manager.voting(question_id, -1)
-    return redirect(url_for("display_question", question_id = question['id']))
-
+    return redirect(url_for("display_question", question_id=question['id']))
 
 
 @app.route('/update-question/<question_id>', methods=['GET','POST'])
 def route_update_question(question_id):
     if request.method == 'POST':
-        updated_question = {'id': question_id,
-                            'submission_time' : "test",
-                            'view_number' : "123",
-                            'vote_number': "456"}
+        updated_question = {'id': question_id}
+
         updated_question.update(request.form)
         data_manager.update_story(updated_question)
         return redirect('/')
