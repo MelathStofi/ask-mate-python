@@ -85,7 +85,10 @@ def voting(question_id, vote_act):
             if vote_act == 1:
                 k += 1
             elif vote_act == -1:
-                k -= 1
+                if k == 0:
+                    pass
+                else:
+                    k -= 1
         question['vote_number'] = str(k)
 
     return connection.write_data_to_file(questions_data, questions, header)
