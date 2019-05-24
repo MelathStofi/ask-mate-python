@@ -15,18 +15,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <form action="list.html" method="get">
+                    <form action="/list" method="get">
                         <select name="order_by">
-                            <option name="default">-Order by:</option>
-                            <option name="time">Date</option>
-                            <option name="view">View Numbers</option>
-                            <option name="vote">Votes</option>
-                            <option name="title">Question Name</option>
+                            <option value="">-Order by:</option>
+                            <option value="submission_time">Date</option>
+                            <option value="view_number">View Numbers</option>
+                            <option value="vote_number">Votes</option>
+                            <option value="title">Question Name</option>
                         </select>
-                        <select name="order_dir">
-                            <option name="default">-Order in:</option>
-                            <option name="asc">Ascending</option>
-                            <option name="desc">Descending</option>
+                        <select name="order_in">
+                            <option value="">-Order in:</option>
+                            <option value="asc">Ascending</option>
+                            <option value="desc">Descending</option>
                         </select>
                         <button type="submit">Sort it mate!</button>
                     </form>

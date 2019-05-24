@@ -1,5 +1,6 @@
 import connection
 import time
+from operator import itemgetter
 
 timestamp = int(time.time())
 questions_data = "sample_data/question.csv"
@@ -106,3 +107,22 @@ def count_views(question_id, increment):
     return connection.write_data_to_file(questions_data, questions, header)
 
 
+def sorting_table(order_by=None, order_in=None):
+    print(itemgetter(order_by))
+    questions = connection.get_all_data(questions_data)
+    if order_by is None and order_in is None:
+        return questions
+    elif order_by == 'title':
+        if order_in == "desc":
+            sorted_questions = sorted(questions, key=lambda k: k[order_by].lower(), reverse=False)
+            return sorted_questions
+        elif order_in == "asc":
+            sorted_questions = sorted(questions, key=lambda k: k[order_by].lower(), reverse=True)
+            return sorted_questions
+    elif order_by == 'submission_time' or order_by == 'view_number' or order_by == 'vote_number':
+        if order_in == "desc":
+            sorted_questions = sorted(questions, key=lambda k: int(k[order_by]), reverse=False)
+            return sorted_questions
+        elif order_in == "asc":
+            sorted_questions = sorted(questions, key=lambda k: int(k[order_by]), reverse=True)
+            return sorted_questions
