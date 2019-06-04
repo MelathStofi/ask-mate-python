@@ -17,16 +17,37 @@ def get_all_questions(cursor):
     questions = cursor.fetchall()
     return questions
 
+# @connection.connection_handler
+# def get_every_question(cursor):
+#     cursor.execute("""
+#                         SELECT title FROM question
+#                         ORDER BY submission_time DESC ;
+#                             """)
+#     every_question = cursor.fetchall()
+#     return every_question
 
 
-# def get_question_by_id(_id):
-#     questions = connection.get_all_data(questions_data)
-#     for question in questions:
-#         if question['id'] == _id:
-#             return question
-#
-#
-# def get_answers_by_id(_id):
+@connection.connection_handler
+def get_question_by_id(cursor,question_id):
+    cursor.execute("""
+                        SELECT * FROM question
+                        where %(question_id)s = id;
+                        """,
+                   {'question_id':question_id})
+    question = cursor.fetchone()
+    return question
+
+
+@connection.connection_handler
+def get_answer_by_id(cursor, question_id):
+    cursor.execute("""
+                        SELECT * FROM answer
+                        where %(question_id)s = question_id;
+                        """,
+                   {'question_id': question_id})
+    answer = cursor.fetchall()
+    return answer
+
 #     all_answers = connection.get_all_data(answers_data)
 #     answers_by_id = []
 #     for answer in all_answers:
