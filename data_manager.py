@@ -18,12 +18,12 @@ def get_all_questions(cursor):
     return questions
 
 
-
-# def get_question_by_id(_id):
-#     questions = connection.get_all_data(questions_data)
-#     for question in questions:
-#         if question['id'] == _id:
-#             return question
+@connection.connection_handler
+def get_question_by_id(_id):
+    questions = connection.get_all_data(questions_data)
+    for question in questions:
+        if question['id'] == _id:
+            return question
 #
 #
 # def get_answers_by_id(_id):

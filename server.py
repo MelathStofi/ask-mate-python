@@ -15,14 +15,14 @@ def route_list():
     return render_template('list.html', every_question=every_question)
 
 
-# @app.route('/question/<question_id>', methods=['GET', 'POST'])
-# def route_display_question(question_id):
-#     question = data_manager.get_question_by_id(question_id)
-#     answers = data_manager.get_answers_by_id(question_id)
-#     data_manager.count_views(question_id, 1)
-#     return render_template('question.html',
-#                            question=question,
-#                            answers=answers)
+@app.route('/question/<question_id>', methods=['GET', 'POST'])
+def route_display_question(question_id):
+    question = data_manager.get_question_by_id(question_id)
+    answers = data_manager.get_answers_by_id(question_id)
+    data_manager.count_views(question_id, 1)
+    return render_template('question.html',
+                           question=question,
+                           answers=answers)
 #
 #
 # @app.route('/add-question', methods=['GET', 'POST'])
