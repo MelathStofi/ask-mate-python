@@ -72,7 +72,7 @@ def get_data_row(row_id):
 
 
 def voting(question_id, vote_act):
-    k = 0
+    v = 0
     questions = get_all_questions()
     for question in questions:
         if question["id"] == question_id:
@@ -80,13 +80,15 @@ def voting(question_id, vote_act):
             try:
                 v = int(v)
             except:
-                v = 0
-            k = int(v)
+                pass
             if vote_act == 1:
-                k += 1
+                v += 1
             elif vote_act == -1:
-                k -= 1
-        question['vote_number'] = str(k)
+                if v == 0:
+                    pass
+                else:
+                    v -= 1
+        question['vote_number'] = str(v)
 
     return connection.write_data_to_file(questions_data, questions, header)
 
@@ -97,7 +99,10 @@ def count_views(question_id, increment):
     for question in questions:
         if question["id"] == question_id:
             view = question['view_number']
-            view = int(view)
+            try:
+                view = int(view)
+            except:
+                view = 0
             view += increment
             question["view_number"] = str(view)
 
