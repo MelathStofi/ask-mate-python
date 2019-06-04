@@ -92,7 +92,7 @@ def voting(question_id, vote_act):
 
 
 def count_views(question_id, increment):
-    view = None
+    view = 0
     questions = get_all_questions()
     for question in questions:
         if question["id"] == question_id:
