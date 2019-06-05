@@ -1,1 +1,36 @@
-body{background-color: pink}
+body{
+    background-color: pink;
+    text-align: center
+}
+
+h1 {
+    font-size: 1.5em;
+    background-color: magenta;
+    margin: 5px;
+    padding: 1px;
+}
+
+p {
+    color: green;
+}
+
+a:link {
+    text-underline-style: none;
+    color: green;
+}
+
+a:visited {
+    color: darkgreen;
+}
+
+td {
+    text-align: left;
+}
+
+td:hover {
+    background-color: magenta;
+}
+
+tr {
+    border: 10px solid magenta;
+}
