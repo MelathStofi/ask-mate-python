@@ -6,16 +6,16 @@ app = Flask(__name__)
 
 @app.route('/')
 def route_list():
-    order_by = request.args.get('order_by')
-    order_in = request.args.get('order_in')
-    every_question = data_manager.sorting_table(order_by,order_in)
+    every_question = data_manager.first_five_questions()
 
-    return render_template('list.html', every_question=first_five_question)
+    return render_template('list.html', every_question=every_question)
 
 
 @app.route('/list')
 def route_full_list():
-    every_question = data_manager.get_every_question()
+    order_by = request.args.get('order_by')
+    order_in = request.args.get('order_in')
+    every_question = data_manager.sorting_table(order_by,order_in)
     print(every_question)
     return render_template('list.html', every_question=every_question)
 
@@ -63,6 +63,8 @@ def edit_answer(answer_id):
         data_manager.update_answer(answer,answer_id)
         return redirect('/')
     return render_template("update_answer.html",answer_id=answer_id)
+
+
 @app.route("/question/<question_id>/vote-up", methods=["GET", "POST"])
 @app.route("/question/<question_id>/vote-down", methods=["GET", "POST"])
 def route_voting(question_id):

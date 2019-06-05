@@ -153,7 +153,7 @@ def voting(cursor, question_id, vote_act):
 #             return sorted_questions
 @connection.connection_handler
 def sorting_table(cursor, order_by, order_in):
-    questions = get_all_questions()
+    questions = get_every_question()
 
     if order_by is None and order_in is None:
         return questions
