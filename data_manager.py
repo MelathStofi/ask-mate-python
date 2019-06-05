@@ -75,28 +75,22 @@ def get_data_row(cursor,row_id):
     return question_row
 
 
-# def voting(question_id, vote_act):
-#     v = 0
-#     questions = get_all_questions()
-#     for question in questions:
-#         if question["id"] == question_id:
-#             v = question['vote_number']
-#             try:
-#                 v = int(v)
-#             except:
-#                 pass
-#             if vote_act == 1:
-#                 v += 1
-#             elif vote_act == -1:
-#                 if v == 0:
-#                     pass
-#                 else:
-#                     v -= 1
-#         question['vote_number'] = str(v)
-#
-#     return connection.write_data_to_file(questions_data, questions, header)
-#
-#
+@connection.connection_handler
+def voting(cursor, question_id, vote_act):
+    if vote_act == 1:
+        cursor.execute("""
+                        UPDATE question 
+                        SET vote_number = vote_number + 1 
+                        WHERE id = %(question_id)s;""",
+                       {'question_id': question_id})
+    else:
+        cursor.execute("""
+                                UPDATE question 
+                                SET vote_number = vote_number - 1 
+                                WHERE id = %(question_id)s AND vote_number > 0;""",
+                       {'question_id': question_id})
+
+
 # def count_views(question_id, increment):
 #     view = 0
 #     questions = get_all_questions()
