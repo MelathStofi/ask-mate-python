@@ -5,13 +5,24 @@ from operator import itemgetter
 
 
 @connection.connection_handler
-def get_all_questions(cursor):
+def first_five_questions(cursor):
     cursor.execute("""
-                        SELECT * FROM question;
-                        
+                        SELECT * FROM question
+                        ORDER BY submission_time DESC
+                        LIMIT 5;
                        """)
     questions = cursor.fetchall()
     return questions
+
+
+@connection.connection_handler
+def get_every_question(cursor):
+    cursor.execute("""
+                        SELECT * FROM question
+                        ORDER BY submission_time DESC;
+                        """)
+    every_questions = cursor.fetchall()
+    return every_questions
 
 
 @connection.connection_handler
@@ -26,15 +37,25 @@ def get_question_by_id(cursor,question_id):
 
 
 @connection.connection_handler
-def get_answer_by_id(cursor, question_id):
+def get_answers_by_id(cursor, question_id):
     cursor.execute("""
                         SELECT * FROM answer
                         where %(question_id)s = question_id;
                         """,
                    {'question_id': question_id})
-    answer = cursor.fetchall()
-    return answer
+    answers = cursor.fetchall()
+    return answers
 
+
+@connection.connection_handler
+def get_answer_row(cursor,answer_id):
+    cursor.execute("""
+                    SELECT * FROM answer
+                    WHERE %(answer_id)s = id;
+                    """,
+                   {'answer_id':answer_id})
+    answer_row = cursor.fetchone()
+    return answer_row
 
 @connection.connection_handler
 def add_question(cursor, question):
@@ -59,19 +80,29 @@ def add_answer(cursor, answer, question_id):
 @connection.connection_handler
 def update_story(cursor,updated_question,question_id):
     cursor.execute(""" 
-                    UPDATE question
-                    SET title = %(title)s, message = %(message)s, image = %(image)s
-                    WHERE %(question_id)s = id ;
-                    """,
+                        UPDATE question
+                        SET title = %(title)s, message = %(message)s, image = %(image)s
+                        WHERE %(question_id)s = id;""",
                    {'title':updated_question['title'],'message':updated_question['message'],'image':updated_question['image'],
                     'question_id':question_id})
+
+
+@connection.connection_handler
+def update_answer(cursor,answer,answer_id):
+    cursor.execute(""" 
+                    UPDATE answer
+                    SET message = %(message)s, image = %(image)s
+                    WHERE %(answer_id)s = id ;
+                    """,
+                   {'message':answer['message'],'image':answer['image'],
+                    'answer_id':answer_id})
+
 
 @connection.connection_handler
 def get_data_row(cursor,row_id):
     cursor.execute("""
-                    SELECT * FROM question
-                    WHERE %(row_id)s = id;
-                    """,
+                        SELECT * FROM question
+                        WHERE %(row_id)s = id;""",
                    {'row_id':row_id})
     question_row = cursor.fetchone()
     return question_row
@@ -81,19 +112,26 @@ def get_data_row(cursor,row_id):
 def voting(cursor, question_id, vote_act):
     if vote_act == 1:
         cursor.execute("""
-                        UPDATE question 
-                        SET vote_number = vote_number + 1 
-                        WHERE id = %(question_id)s;""",
+                            UPDATE question 
+                            SET vote_number = vote_number + 1 
+                            WHERE id = %(question_id)s;""",
                        {'question_id': question_id})
     else:
         cursor.execute("""
-                                UPDATE question 
-                                SET vote_number = vote_number - 1 
-                                WHERE id = %(question_id)s AND vote_number > 0;""",
+                            UPDATE question 
+                            SET vote_number = vote_number - 1 
+                            WHERE id = %(question_id)s AND vote_number > 0;""",
                        {'question_id': question_id})
 
 
-# def count_views(question_id, increment):
+@connection.connection_handler
+def count_views(cursor, question_id, increment):
+    cursor.execute("""
+                        UPDATE question
+                        SET view_number = view_number + %(increment)s
+                        WHERE id = %(question_id)s""",
+                   {'increment': increment,
+                    'question_id': question_id})
 #     view = 0
 #     questions = get_all_questions()
 #     for question in questions:
@@ -112,7 +150,7 @@ def voting(cursor, question_id, vote_act):
 
 @connection.connection_handler
 def sorting_table(cursor, order_by, order_in):
-    questions = get_all_questions()
+    questions = get_every_question()
 
     if order_by is None and order_in is None:
         return questions

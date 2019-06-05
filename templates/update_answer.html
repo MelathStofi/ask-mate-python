@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add Answer</title>
+    <title>Update Answer</title>
     <link rel="stylesheet" type="text/css" href="static/liststyle.css">
 </head>
 <body>
     <h1><i><a href="/"><h1>AskMate</a></i></h1>
-    <form action="/question/{{ question_id }}/new-answer" method="post">
+    <form action="/answer/{{ answer_id }}/edit" method="post">
         <p>Answer:<br>
-        <textarea rows="5" cols="30" name="answer" required minlength="10"></textarea>
+        <textarea rows="5" cols="30" name="answer" required minlength="10">{{ answer_row['message'] }}</textarea>
         </p>
         <p>
             Image URL:<br>
-            <input id = "image-url" name="image" type="url">
+            <input id = "image-url" name="image" type="url" value="{{ answer_row['image'] }}">
         </p>
         <p>
             <button type="submit">Add Answer!

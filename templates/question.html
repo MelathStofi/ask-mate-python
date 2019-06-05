@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="static/liststyle.css">
 </head>
 <body>
-    <h1><i><a href="/list"><h1>AskMate</a></i></h1>
+    <h1><i><a href="/"><h1>AskMate</a></i></h1>
     <h2>{{ question['title'] }}</h2><br>
         Views: {{ question['view_number'] }}<br>
 
@@ -33,13 +33,14 @@
                         {%if row['image'] != None %}
                             <td><img src="{{ row['image'] }}" height="200" width="300"></td>
                         {% endif %}
+                        <td> <a href="/answer/{{ row['id'] }}/edit">Edit answer</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </p>
     <p>
-        <a href="/question/{{ question['id'] }}/new-answer"">Add new answer</a>
+        <a href="/question/{{ question['id'] }}/new-answer">Add new answer</a>
     </p>
 </body>
 </html>

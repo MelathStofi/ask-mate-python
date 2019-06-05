@@ -6,7 +6,7 @@
         <link rel="stylesheet" type="text/css" href="static/liststyle.css">
     </head>
     <body>
-        <p><h1><i><a href="/list"><h1>AskMate</a></i></h1></p>
+        <p><h1><i><a href="/"><h1>AskMate</a></i></h1></p>
         <p><a href="/add-question"><h3>Ask new question</h3>    </a></p>
             <table border="1" cellpadding="10">
                 <thead>
@@ -30,7 +30,7 @@
                         </select>
                         <button type="submit">Sort it mate!</button>
                     </form>
-                    {% for question in every_question[::-1] %}
+                    {% for question in every_question %}
                         <tr>
                             <td><a href="/question/{{ question['id'] }}">{{ question['title'] }}</a></td>
                         </tr>
@@ -38,6 +38,7 @@
 
                 </tbody>
             </table>
+
         <a href="/list">SHOW ALL QUESTIONS</a>
     </body>
 </html>

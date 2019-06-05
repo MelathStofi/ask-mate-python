@@ -5,25 +5,25 @@ app = Flask(__name__)
 
 
 @app.route('/')
-@app.route('/list')
 def route_list():
-    order_by = request.args.get('order_by')
-    order_in = request.args.get('order_in')
-    every_question = data_manager.sorting_table(order_by,order_in)
+    every_question = data_manager.first_five_questions()
 
     return render_template('list.html', every_question=every_question)
 
 
-# def route_full_list():
-#     every_question = data_manager.get_every_question()
-#
-#     return render_template('list.html', every_question=every_question)
+@app.route('/list')
+def route_full_list():
+    order_by = request.args.get('order_by')
+    order_in = request.args.get('order_in')
+    every_question = data_manager.sorting_table(order_by,order_in)
+    print(every_question)
+    return render_template('list.html', every_question=every_question)
 
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def route_display_question(question_id):
     question = data_manager.get_question_by_id(question_id)
-    answers = data_manager.get_answer_by_id(question_id)
+    answers = data_manager.get_answers_by_id(question_id)
     # data_manager.count_views(question_id, 1)
     return render_template('question.html',
                            question=question, answers=answers
@@ -47,9 +47,23 @@ def route_add_answer(question_id):
         answer = {'message': request.form['answer'],
                   'image': request.form['image']}
         data_manager.add_answer(answer, question_id)
-        return redirect("/list")
+        return redirect("/")
     return render_template("add_answer.html",
                             question_id = question_id)
+
+
+@app.route("/answer/<answer_id>/edit", methods=["GET","POST"])
+def edit_answer(answer_id):
+    if request.method == "POST":
+        answer = {'id': answer_id,
+                  'message': request.form['answer'],
+                  'image': request.form['image']}
+        print(answer_id)
+        print(answer)
+        data_manager.update_answer(answer,answer_id)
+        return redirect('/')
+    answer_row = data_manager.get_answer_row(answer_id)
+    return render_template("update_answer.html",answer_id=answer_id,answer_row=answer_row)
 
 
 @app.route("/question/<question_id>/vote-up", methods=["GET", "POST"])
@@ -60,7 +74,7 @@ def route_voting(question_id):
         data_manager.voting(question_id, 1)
     elif 'vote-down' in str(request.url_rule):
         data_manager.voting(question_id, -1)
-    # data_manager.count_views(question_id, -1)
+    data_manager.count_views(question_id, -1)
     return redirect(url_for("route_display_question", question_id=question['id']))
 
 
