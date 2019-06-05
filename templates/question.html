@@ -18,7 +18,7 @@
     <h4>Question:</h4><br>
         {{ question['message'] }}
      <p>
-         {%if question['image'] != None %}
+         {%if question['image'] %}
             Image:<br>
             <img src="{{ question['image'] }}" height="200" width="300">
          {% endif %}
@@ -30,7 +30,7 @@
             <tbody>
                 {% for row in answers %}
                     <tr><td>{{ row['message'] }}</td>
-                        {%if row['image'] != None %}
+                        {%if row['image'] %}
                             <td><img src="{{ row['image'] }}" height="200" width="300"></td>
                         {% endif %}
                         <td> <a href="/answer/{{ row['id'] }}/edit">Edit answer</a></td>

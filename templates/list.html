@@ -33,12 +33,14 @@
                     {% for question in every_question %}
                         <tr>
                             <td><a href="/question/{{ question['id'] }}">{{ question['title'] }}</a></td>
+                            <td><a href="/delete_question/{{ question['id'] }}"> Delete Question</a></td>
                         </tr>
                     {% endfor %}
 
                 </tbody>
             </table>
-
-        <a href="/list">SHOW ALL QUESTIONS</a>
+            {% if show %}
+                <a href="/list">SHOW ALL QUESTIONS</a>
+            {% endif %}
     </body>
 </html>

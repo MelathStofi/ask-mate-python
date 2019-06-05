@@ -7,8 +7,8 @@ app = Flask(__name__)
 @app.route('/')
 def route_list():
     every_question = data_manager.first_five_questions()
-
-    return render_template('list.html', every_question=every_question)
+    show = 1
+    return render_template('list.html', every_question=every_question,show=show)
 
 
 @app.route('/list')
@@ -16,8 +16,8 @@ def route_full_list():
     order_by = request.args.get('order_by')
     order_in = request.args.get('order_in')
     every_question = data_manager.sorting_table(order_by,order_in)
-    print(every_question)
-    return render_template('list.html', every_question=every_question)
+    show = None
+    return render_template('list.html', every_question=every_question, show=show)
 
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
@@ -58,8 +58,6 @@ def edit_answer(answer_id):
         answer = {'id': answer_id,
                   'message': request.form['answer'],
                   'image': request.form['image']}
-        print(answer_id)
-        print(answer)
         data_manager.update_answer(answer,answer_id)
         return redirect('/')
     answer_row = data_manager.get_answer_row(answer_id)
@@ -88,6 +86,11 @@ def route_update_question(question_id):
     update_question_row = data_manager.get_data_row(question_id)
     return render_template('edit.html', question_id=question_id, update_question_row=update_question_row)
 
+
+@app.route('/delete_question/<question_id>')
+def delete_question(question_id):
+    data_manager.delete_question(question_id)
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run(
