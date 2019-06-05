@@ -76,6 +76,16 @@ def delete_question(cursor,question_id):
                     """,
                    {'question_id':question_id})
 
+
+@connection.connection_handler
+def delete_answer(cursor,answer_id):
+    cursor.execute("""
+                    DELETE FROM answer
+                    WHERE %(answer_id)s = id;
+                    """,
+                   {'answer_id':answer_id})
+
+
 @connection.connection_handler
 def add_answer(cursor, answer, question_id):
     cursor.execute("""
