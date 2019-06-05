@@ -33,7 +33,8 @@
                         {%if row['image'] %}
                             <td><img src="{{ row['image'] }}" height="200" width="300"></td>
                         {% endif %}
-                        <td> <a href="/answer/{{ row['id'] }}/edit">Edit answer</a></td>
+                        <td> <a href="/answer/{{ row['id'] }}/edit">Edit answer</a><br><br>
+                            <a href="/delete_answer/{{ row['id'] }}">Delete answer</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
