@@ -1,10 +1,6 @@
 import connection
 from operator import itemgetter
 
-questions_data = "sample_data/question.csv"
-answers_data = "sample_data/answer.csv"
-header = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
-
 
 @connection.connection_handler
 def get_all_questions(cursor):
@@ -40,45 +36,24 @@ def get_answer_by_id(cursor, question_id):
 
 @connection.connection_handler
 def add_question(cursor, question):
-    question_title = question['title']
-    question_message = question['message']
-    question_image = question['image']
-
     cursor.execute("""
                         INSERT INTO question (submission_time, view_number, vote_number, title, message, image)
                         VALUES (CURRENT_TIMESTAMP, 0, 0, %(question_title)s, %(question_message)s, %(question_image)s)""",
-                   {'question_title': question_title,
-                    'question_message': question_message,
-                    'question_image': question_image})
+                   {'question_title': question['title'],
+                    'question_message': question['message'],
+                    'question_image': question['image']})
 
 
 @connection.connection_handler
 def add_answer(cursor, answer, question_id):
-    answer_message = answer['message']
-    answer_image = answer['image']
-
     cursor.execute("""
                         INSERT INTO answer (submission_time, vote_number, question_id, message, image)
                         VALUES (CURRENT_TIMESTAMP, 0, %(question_id)s, %(answer_message)s, %(answer_image)s)""",
                    {'question_id': question_id,
-                    'answer_message': answer_message,
-                    'answer_image': answer_image})
+                    'answer_message': answer['message'],
+                    'answer_image': answer['image']})
 
-#     answer_header = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-#     all_answers = connection.get_all_data(answers_data)
-#     answer['id'] = len(all_answers) + 1
-#     answer['question_id'] = question_id
-#     answer['submission_time'] = timestamp
-#     all_answers.append(answer)
-#     connection.write_data_to_file(answers_data, all_answers, answer_header)
-#
-#
-# def count_data_lines(data_file):
-#     all_data = connection.get_all_data(data_file)
-#     for i in range(len(all_data)):
-#         data_lines = i
-#         return data_lines
-#
+
 @connection.connection_handler
 def update_story(cursor,updated_question,question_id):
     cursor.execute(""" 
