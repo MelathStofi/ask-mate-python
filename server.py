@@ -5,25 +5,33 @@ app = Flask(__name__)
 
 
 @app.route('/')
-@app.route('/list', methods=['GET'])
+@app.route('/list')
 def route_list():
     # order_by = request.args.get('order_by')
     # order_in = request.args.get('order_in')
     # need to call data_manager.sorting if implemented
     every_question = data_manager.get_all_questions()
-    print(every_question)
+
     return render_template('list.html', every_question=every_question)
+
+
+# def route_full_list():
+#     every_question = data_manager.get_every_question()
+#
+#     return render_template('list.html', every_question=every_question)
 
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def route_display_question(question_id):
     question = data_manager.get_question_by_id(question_id)
-    answers = data_manager.get_answers_by_id(question_id)
-    data_manager.count_views(question_id, 1)
+    print(question)
+    answers = data_manager.get_answer_by_id(question_id)
+    print(answers)
+    # data_manager.count_views(question_id, 1)
     return render_template('question.html',
-                           question=question,
-                           answers=answers)
-#
+                           question=question, answers=answers
+                           )
+
 #
 # @app.route('/add-question', methods=['GET', 'POST'])
 # def route_add_question():
