@@ -7,10 +7,9 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/list')
 def route_list():
-    # order_by = request.args.get('order_by')
-    # order_in = request.args.get('order_in')
-    # need to call data_manager.sorting if implemented
-    every_question = data_manager.get_all_questions()
+    order_by = request.args.get('order_by')
+    order_in = request.args.get('order_in')
+    every_question = data_manager.sorting_table(order_by,order_in)
 
     return render_template('list.html', every_question=every_question)
 
@@ -50,7 +49,7 @@ def route_add_answer(question_id):
         data_manager.add_answer(answer, question_id)
         return redirect("/list")
     return render_template("add_answer.html",
-                            question_id=question_id)
+                            question_id = question_id)
 
 
 @app.route("/question/<question_id>/vote-up", methods=["GET", "POST"])

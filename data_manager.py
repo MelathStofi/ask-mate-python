@@ -1,4 +1,6 @@
 import connection
+from psycopg2 import sql
+
 from operator import itemgetter
 
 
@@ -131,3 +133,24 @@ def count_views(cursor, question_id, increment):
 #         elif order_in == "asc":
 #             sorted_questions = sorted(questions, key=lambda k: int(k[order_by]), reverse=True)
 #             return sorted_questions
+@connection.connection_handler
+def sorting_table(cursor, order_by, order_in):
+    questions = get_all_questions()
+
+    if order_by is None and order_in is None:
+        return questions
+    else:
+        if order_in == 'ASC':
+            cursor.execute(
+            sql.SQL("select * from question ORDER BY {order_by} ASC").
+                format(order_by=sql.Identifier(order_by))
+            )
+            questions = cursor.fetchall()
+            return questions
+        if order_in == 'DESC':
+            cursor.execute(
+            sql.SQL("select * from question ORDER BY {order_by} DESC").
+                format(order_by=sql.Identifier(order_by))
+            )
+            questions = cursor.fetchall()
+            return questions
