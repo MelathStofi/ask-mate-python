@@ -1,8 +1,6 @@
 import connection
-import time
 from operator import itemgetter
 
-timestamp = int(time.time())
 questions_data = "sample_data/question.csv"
 answers_data = "sample_data/answer.csv"
 header = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
@@ -56,7 +54,19 @@ def get_answer_by_id(cursor, question_id):
 #     return answers_by_id
 #
 #
-# def add_question(question):
+@connection.connection_handler
+def add_question(cursor, question):
+    question_title = question['title']
+    question_message = question['message']
+    question_image = question['image']
+
+    cursor.execute("""
+                        INSERT INTO question (submission_time, view_number, vote_number, title, message, image)
+                        VALUES (CURRENT_TIMESTAMP, 0, 0, %(question_title)s, %(question_message)s, %(question_image)s)""",
+                   {'question_title': question_title,
+                    'question_message': question_message,
+                    'question_image': question_image})
+
 #     all_questions = connection.get_all_data(questions_data)
 #     question['id'] = len(all_questions) + 1
 #     question['submission_time'] = timestamp
