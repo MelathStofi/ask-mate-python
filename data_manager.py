@@ -79,25 +79,27 @@ def add_answer(cursor, answer, question_id):
 #         data_lines = i
 #         return data_lines
 #
-#
-# def update_story(updated_question):
-#     questions = get_all_questions()
-#
-#     for row in range(len(questions)):
-#         if questions[row]['id'] == updated_question['id']:
-#             questions[row]['title'] = updated_question['title']
-#             questions[row]['message'] = updated_question['message']
-#             questions[row]['image'] = updated_question['image']
-#     return connection.write_data_to_file('sample_data/question.csv', questions, header)
-#
-#
-# def get_data_row(row_id):
-#     questions = get_all_questions()
-#     for row in range(len(questions)):
-#         if questions[row]['id'] == row_id:
-#             return questions[row]
-#
-#
+@connection.connection_handler
+def update_story(cursor,updated_question,question_id):
+    cursor.execute(""" 
+                    UPDATE question
+                    SET title = %(title)s, message = %(message)s, image = %(image)s
+                    WHERE %(question_id)s = id ;
+                    """,
+                   {'title':updated_question['title'],'message':updated_question['message'],'image':updated_question['image'],
+                    'question_id':question_id})
+
+@connection.connection_handler
+def get_data_row(cursor,row_id):
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE %(row_id)s = id;
+                    """,
+                   {'row_id':row_id})
+    question_row = cursor.fetchone()
+    return question_row
+
+
 # def voting(question_id, vote_act):
 #     v = 0
 #     questions = get_all_questions()
