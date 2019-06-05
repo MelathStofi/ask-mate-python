@@ -5,20 +5,20 @@ app = Flask(__name__)
 
 
 @app.route('/')
-@app.route('/list')
 def route_list():
     # order_by = request.args.get('order_by')
     # order_in = request.args.get('order_in')
     # need to call data_manager.sorting if implemented
-    every_question = data_manager.get_all_questions()
+    first_five_question = data_manager.first_five_questions()
 
+    return render_template('list.html', every_question=first_five_question)
+
+
+@app.route('/list')
+def route_full_list():
+    every_question = data_manager.get_every_question()
+    print(every_question)
     return render_template('list.html', every_question=every_question)
-
-
-# def route_full_list():
-#     every_question = data_manager.get_every_question()
-#
-#     return render_template('list.html', every_question=every_question)
 
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
@@ -48,9 +48,23 @@ def route_add_answer(question_id):
         answer = {'message': request.form['answer'],
                   'image': request.form['image']}
         data_manager.add_answer(answer, question_id)
-        return redirect("/list")
+        return redirect("/")
     return render_template("add_answer.html",
                             question_id=question_id)
+
+
+@app.route("/answer/<answer_id>/edit", methods=["GET","POST"])
+def edit_answer(answer_id):
+    if request.method == "POST":
+        answer = {'id': answer_id,
+                  'message': request.form['answer'],
+                  'image': request.form['image']}
+        print(answer_id)
+        print(answer)
+        data_manager.update_answer(answer,answer_id)
+        return redirect('/')
+    return render_template("update_answer.html",answer_id=answer_id)
+
 
 
 # @app.route("/question/<question_id>/vote-up", methods=["GET", "POST"])
@@ -64,7 +78,7 @@ def route_add_answer(question_id):
 #     data_manager.count_views(question_id, -1)
 #     return redirect(url_for("route_display_question", question_id=question['id']))
 #
-#
+
 @app.route('/edit/<question_id>', methods=['GET','POST'])
 def route_update_question(question_id):
     if request.method == 'POST':
