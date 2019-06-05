@@ -57,19 +57,17 @@ def add_answer(cursor, answer, question_id):
 @connection.connection_handler
 def update_story(cursor,updated_question,question_id):
     cursor.execute(""" 
-                    UPDATE question
-                    SET title = %(title)s, message = %(message)s, image = %(image)s
-                    WHERE %(question_id)s = id ;
-                    """,
+                        UPDATE question
+                        SET title = %(title)s, message = %(message)s, image = %(image)s
+                        WHERE %(question_id)s = id;""",
                    {'title':updated_question['title'],'message':updated_question['message'],'image':updated_question['image'],
                     'question_id':question_id})
 
 @connection.connection_handler
 def get_data_row(cursor,row_id):
     cursor.execute("""
-                    SELECT * FROM question
-                    WHERE %(row_id)s = id;
-                    """,
+                        SELECT * FROM question
+                        WHERE %(row_id)s = id;""",
                    {'row_id':row_id})
     question_row = cursor.fetchone()
     return question_row
@@ -79,19 +77,26 @@ def get_data_row(cursor,row_id):
 def voting(cursor, question_id, vote_act):
     if vote_act == 1:
         cursor.execute("""
-                        UPDATE question 
-                        SET vote_number = vote_number + 1 
-                        WHERE id = %(question_id)s;""",
+                            UPDATE question 
+                            SET vote_number = vote_number + 1 
+                            WHERE id = %(question_id)s;""",
                        {'question_id': question_id})
     else:
         cursor.execute("""
-                                UPDATE question 
-                                SET vote_number = vote_number - 1 
-                                WHERE id = %(question_id)s AND vote_number > 0;""",
+                            UPDATE question 
+                            SET vote_number = vote_number - 1 
+                            WHERE id = %(question_id)s AND vote_number > 0;""",
                        {'question_id': question_id})
 
 
-# def count_views(question_id, increment):
+@connection.connection_handler
+def count_views(cursor, question_id, increment):
+    cursor.execute("""
+                        UPDATE question
+                        SET view_number = view_number + %(increment)s
+                        WHERE id = %(question_id)s""",
+                   {'increment': increment,
+                    'question_id': question_id})
 #     view = 0
 #     questions = get_all_questions()
 #     for question in questions:
