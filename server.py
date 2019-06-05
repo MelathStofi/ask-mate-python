@@ -44,17 +44,17 @@ def route_add_question():
     return render_template('add_question.html')
 #
 #
-# @app.route("/question/<question_id>/new-answer", methods=["GET", "POST"])
-# def route_add_answer(question_id):
-#     if request.method == 'POST':
-#         answer = {'message': request.form['answer'],
-#                   'image': request.form['image']}
-#         data_manager.add_answer(answer, question_id)
-#         return redirect("/list")
-#     return render_template("add_answer.html",
-#                            question_id=question_id)
-#
-#
+@app.route("/question/<question_id>/new-answer", methods=["GET", "POST"])
+def route_add_answer(question_id):
+    if request.method == 'POST':
+        answer = {'message': request.form['answer'],
+                  'image': request.form['image']}
+        data_manager.add_answer(answer, question_id)
+        return redirect("/list")
+    return render_template("add_answer.html",
+                            question_id=question_id)
+
+
 # @app.route("/question/<question_id>/vote-up", methods=["GET", "POST"])
 # @app.route("/question/<question_id>/vote-down", methods=["GET", "POST"])
 # def route_voting(question_id):

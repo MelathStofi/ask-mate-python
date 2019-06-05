@@ -15,15 +15,6 @@ def get_all_questions(cursor):
     questions = cursor.fetchall()
     return questions
 
-# @connection.connection_handler
-# def get_every_question(cursor):
-#     cursor.execute("""
-#                         SELECT title FROM question
-#                         ORDER BY submission_time DESC ;
-#                             """)
-#     every_question = cursor.fetchall()
-#     return every_question
-
 
 @connection.connection_handler
 def get_question_by_id(cursor,question_id):
@@ -46,14 +37,7 @@ def get_answer_by_id(cursor, question_id):
     answer = cursor.fetchall()
     return answer
 
-#     all_answers = connection.get_all_data(answers_data)
-#     answers_by_id = []
-#     for answer in all_answers:
-#         if answer['question_id'] == _id:
-#             answers_by_id.append(answer)
-#     return answers_by_id
-#
-#
+
 @connection.connection_handler
 def add_question(cursor, question):
     question_title = question['title']
@@ -67,14 +51,19 @@ def add_question(cursor, question):
                     'question_message': question_message,
                     'question_image': question_image})
 
-#     all_questions = connection.get_all_data(questions_data)
-#     question['id'] = len(all_questions) + 1
-#     question['submission_time'] = timestamp
-#     all_questions.append(question)
-#     connection.write_data_to_file(questions_data, all_questions, header)
-#
-#
-# def add_answer(answer, question_id):
+
+@connection.connection_handler
+def add_answer(cursor, answer, question_id):
+    answer_message = answer['message']
+    answer_image = answer['image']
+
+    cursor.execute("""
+                        INSERT INTO answer (submission_time, vote_number, question_id, message, image)
+                        VALUES (CURRENT_TIMESTAMP, 0, %(question_id)s, %(answer_message)s, %(answer_image)s)""",
+                   {'question_id': question_id,
+                    'answer_message': answer_message,
+                    'answer_image': answer_image})
+
 #     answer_header = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
 #     all_answers = connection.get_all_data(answers_data)
 #     answer['id'] = len(all_answers) + 1
