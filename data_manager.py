@@ -37,15 +37,25 @@ def get_question_by_id(cursor,question_id):
 
 
 @connection.connection_handler
-def get_answer_by_id(cursor, question_id):
+def get_answers_by_id(cursor, question_id):
     cursor.execute("""
                         SELECT * FROM answer
                         where %(question_id)s = question_id;
                         """,
                    {'question_id': question_id})
-    answer = cursor.fetchall()
-    return answer
+    answers = cursor.fetchall()
+    return answers
 
+
+@connection.connection_handler
+def get_answer_row(cursor,answer_id):
+    cursor.execute("""
+                    SELECT * FROM answer
+                    WHERE %(answer_id)s = id;
+                    """,
+                   {'answer_id':answer_id})
+    answer_row = cursor.fetchone()
+    return answer_row
 
 @connection.connection_handler
 def add_question(cursor, question):

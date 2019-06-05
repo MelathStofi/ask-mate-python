@@ -23,7 +23,7 @@ def route_full_list():
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def route_display_question(question_id):
     question = data_manager.get_question_by_id(question_id)
-    answers = data_manager.get_answer_by_id(question_id)
+    answers = data_manager.get_answers_by_id(question_id)
     # data_manager.count_views(question_id, 1)
     return render_template('question.html',
                            question=question, answers=answers
@@ -62,7 +62,8 @@ def edit_answer(answer_id):
         print(answer)
         data_manager.update_answer(answer,answer_id)
         return redirect('/')
-    return render_template("update_answer.html",answer_id=answer_id)
+    answer_row = data_manager.get_answer_row(answer_id)
+    return render_template("update_answer.html",answer_id=answer_id,answer_row=answer_row)
 
 
 @app.route("/question/<question_id>/vote-up", methods=["GET", "POST"])
