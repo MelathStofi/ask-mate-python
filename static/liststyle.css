@@ -12,7 +12,7 @@ body {
 }
 
 p {
-    color: green;
+    color: darkmagenta;
 }
 
 #delete {
@@ -20,7 +20,7 @@ p {
 }
 
 a:visited {
-    color: green;
+    color: cornflowerblue;
 }
 
 td {
@@ -28,7 +28,7 @@ td {
 }
 
 a:hover {
-    background-color: magenta;
+    background-color: #ff9999;
 }
 
 tr {

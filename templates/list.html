@@ -7,13 +7,13 @@
     </head>
     <body>
         <a id="logo" href="/"><img src="/static/logo.png"></a>
-        <p><a href="/add-question"><h3>Ask new question</h3>    </a></p>
+        <p><a href="/add-question"><h3>Ask new question</h3></a></p>
             <table align="center">
-                <b><p>Questions</p></b>
+                <h1><p>Questions</p></h1>
                 <form action="/list" method="post">
                     <input name="search">
                     <button type="submit">Search</button>
-                </form>
+                </form><br><br>
                 <tbody>
                     <tr align="right">
                     <form action="/list" method="get">
@@ -40,7 +40,7 @@
                     {% endfor %}
 
                 </tbody>
-            </table>
+            </table><br>
             {% if show %}
                 <a href="/list">SHOW ALL QUESTIONS</a>
             {% endif %}
