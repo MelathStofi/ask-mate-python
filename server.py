@@ -51,10 +51,11 @@ def route_add_question():
 @app.route("/question/<question_id>/new-answer", methods=["GET", "POST"])
 def route_add_answer(question_id):
     if request.method == 'POST':
+        question = data_manager.get_question_by_id(question_id)
         answer = {'message': request.form['answer'],
                   'image': request.form['image']}
         data_manager.add_answer(answer, question_id)
-        return redirect("/")
+        return redirect(url_for("route_display_question", question_id=question['id']))
     return render_template("add_answer.html",
                             question_id = question_id)
 
@@ -87,10 +88,11 @@ def route_voting(question_id):
 @app.route('/edit/<question_id>', methods=['GET','POST'])
 def route_update_question(question_id):
     if request.method == 'POST':
+        question = data_manager.get_question_by_id(question_id)
         updated_question = {'id': question_id}
         updated_question.update(request.form)
         data_manager.update_story(updated_question,question_id)
-        return redirect('/')
+        return redirect(url_for("route_display_question", question_id=question['id']))
     update_question_row = data_manager.get_data_row(question_id)
     return render_template('edit.html', question_id=question_id, update_question_row=update_question_row)
 
@@ -103,6 +105,8 @@ def delete_question(question_id):
 
 @app.route('/delete_answer/<answer_id>')
 def delete_answer(answer_id):
+    print(answer_id)
+    #question = data_manager.get_question_by_id(question_id)
     data_manager.delete_answer(answer_id)
     return redirect('/')
 
