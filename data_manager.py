@@ -27,6 +27,7 @@ def get_every_question(cursor):
 
 @connection.connection_handler
 def get_question_search_result(cursor, question_search):
+    question_search = '%' + question_search + '%'
     cursor.execute("""
                         SELECT * FROM question
                         WHERE title ILIKE %(question_search)s
@@ -155,48 +156,16 @@ def voting(cursor, question_id, vote_act):
                        {'question_id': question_id})
 
 
+
 @connection.connection_handler
-def count_views(cursor, question_id, increment):
+def view_counter(cursor, question_id):
     cursor.execute("""
-                        UPDATE question
-                        SET view_number = view_number + %(increment)s
-                        WHERE id = %(question_id)s""",
-                   {'increment': increment,
-                    'question_id': question_id})
-#     view = 0
-#     questions = get_all_questions()
-#     for question in questions:
-#         if question["id"] == question_id:
-#             view = question['view_number']
-#             try:
-#                 view = int(view)
-#             except:
-#                 view = 0
-#             view += increment
-#             question["view_number"] = str(view)
-#
-#     return connection.write_data_to_file(questions_data, questions, header)
-#
-#
-# def sorting_table(order_by=None, order_in=None):
-#     print(itemgetter(order_by))
-#     questions = connection.get_all_data(questions_data)
-#     if order_by is None and order_in is None:
-#         return questions
-#     elif order_by == 'title':
-#         if order_in == "desc":
-#             sorted_questions = sorted(questions, key=lambda k: k[order_by].lower(), reverse=False)
-#             return sorted_questions
-#         elif order_in == "asc":
-#             sorted_questions = sorted(questions, key=lambda k: k[order_by].lower(), reverse=True)
-#             return sorted_questions
-#     elif order_by == 'submission_time' or order_by == 'view_number' or order_by == 'vote_number':
-#         if order_in == "desc":
-#             sorted_questions = sorted(questions, key=lambda k: int(k[order_by]), reverse=False)
-#             return sorted_questions
-#         elif order_in == "asc":
-#             sorted_questions = sorted(questions, key=lambda k: int(k[order_by]), reverse=True)
-#             return sorted_questions
+                    UPDATE question
+                    SET view_number = view_number + 1
+                    WHERE id = %(question_id)s;
+                    """, {'question_id': question_id})
+
+
 @connection.connection_handler
 def sorting_table(cursor, order_by, order_in):
     questions = get_every_question()
