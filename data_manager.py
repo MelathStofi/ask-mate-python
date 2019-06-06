@@ -124,29 +124,15 @@ def voting(cursor, question_id, vote_act):
                        {'question_id': question_id})
 
 
+
 @connection.connection_handler
-def count_views(cursor, question_id, increment):
+def view_counter(cursor, question_id):
     cursor.execute("""
-                        UPDATE question
-                        SET view_number = view_number + %(increment)s
-                        WHERE id = %(question_id)s""",
-                   {'increment': increment,
-                    'question_id': question_id})
-#     view = 0
-#     questions = get_all_questions()
-#     for question in questions:
-#         if question["id"] == question_id:
-#             view = question['view_number']
-#             try:
-#                 view = int(view)
-#             except:
-#                 view = 0
-#             view += increment
-#             question["view_number"] = str(view)
-#
-#     return connection.write_data_to_file(questions_data, questions, header)
-#
-#
+                    UPDATE question
+                    SET view_number = view_number + 1
+                    WHERE id = %(question_id)s;
+                    """, {'question_id': question_id})
+
 
 @connection.connection_handler
 def sorting_table(cursor, order_by, order_in):

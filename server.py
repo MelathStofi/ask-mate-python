@@ -16,7 +16,8 @@ def route_full_list():
     order_by = request.args.get('order_by')
     order_in = request.args.get('order_in')
     every_question = data_manager.sorting_table(order_by,order_in)
-    print(every_question)
+    return_url = request.referrer
+    print(return_url)
     return render_template('list.html', every_question=every_question)
 
 
@@ -24,7 +25,10 @@ def route_full_list():
 def route_display_question(question_id):
     question = data_manager.get_question_by_id(question_id)
     answers = data_manager.get_answers_by_id(question_id)
-    # data_manager.count_views(question_id, 1)
+    # data_manager.count_views(question_id)
+    if request.url != request.referrer:
+        data_manager.view_counter(question_id)
+
     return render_template('question.html',
                            question=question, answers=answers
                            )
@@ -74,7 +78,6 @@ def route_voting(question_id):
         data_manager.voting(question_id, 1)
     elif 'vote-down' in str(request.url_rule):
         data_manager.voting(question_id, -1)
-    data_manager.count_views(question_id, -1)
     return redirect(url_for("route_display_question", question_id=question['id']))
 
 
