@@ -51,6 +51,7 @@ def route_add_question():
 @app.route("/question/<question_id>/new-answer", methods=["GET", "POST"])
 def route_add_answer(question_id):
     if request.method == 'POST':
+        question = data_manager.get_question_by_id(question_id)
         answer = {'message': request.form['answer'],
                   'image': request.form['image']}
         data_manager.add_answer(answer, question_id)
@@ -86,6 +87,7 @@ def route_voting(question_id):
 @app.route('/edit/<question_id>', methods=['GET','POST'])
 def route_update_question(question_id):
     if request.method == 'POST':
+        question = data_manager.get_question_by_id(question_id)
         updated_question = {'id': question_id}
         updated_question.update(request.form)
         data_manager.update_story(updated_question,question_id)
