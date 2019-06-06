@@ -11,8 +11,12 @@ def route_list():
     return render_template('list.html', every_question=every_question,show=show)
 
 
-@app.route('/list')
+@app.route('/list', methods=['GET', 'POST'])
 def route_full_list():
+    if request.method == 'POST':
+        question_search = request.form['search']
+        search_result = data_manager.get_question_search_result(question_search)
+        return render_template('list.html', every_question=search_result)
     order_by = request.args.get('order_by')
     order_in = request.args.get('order_in')
     every_question = data_manager.sorting_table(order_by,order_in)

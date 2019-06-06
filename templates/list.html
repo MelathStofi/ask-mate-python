@@ -10,6 +10,10 @@
         <p><a href="/add-question"><h3>Ask new question</h3>    </a></p>
             <table align="center">
                 <b><p>Questions</p></b>
+                <form action="/list" method="post">
+                    <input name="search">
+                    <button type="submit">Search</button>
+                </form>
                 <tbody>
                     <tr align="right">
                     <form action="/list" method="get">
