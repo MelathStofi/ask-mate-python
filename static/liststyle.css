@@ -1,1 +1,35 @@
-body{background-color: pink}
+body {
+    background-color: pink;
+    text-align: center
+}
+
+#logo {
+    background-color: #ff9999;
+    padding-top: 200px;
+    padding-left: 700px;
+    padding-right: 700px;
+}
+
+p {
+    color: green;
+}
+
+#delete {
+    color: red;
+}
+
+a:visited {
+    color: green;
+}
+
+td {
+    text-align: left;
+}
+
+td:hover {
+    background-color: magenta;
+}
+
+tr {
+    border: 10px solid magenta;
+}

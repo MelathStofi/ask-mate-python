@@ -3,18 +3,15 @@
     <head>
         <meta charset="UTF-8">
         <title>AskMate</title>
-        <link rel="stylesheet" type="text/css" href="static/liststyle.css">
+        <link rel="stylesheet" type="text/css" href="/static/liststyle.css">
     </head>
     <body>
-        <p><h1><i><a href="/"><h1>AskMate</a></i></h1></p>
+        <a id="logo" href="/"><img src="/static/logo.png"></a>
         <p><a href="/add-question"><h3>Ask new question</h3>    </a></p>
-            <table border="1" cellpadding="10">
-                <thead>
-                    <tr>
-                        <p><th>Questions</th></p>
-                    </tr>
-                </thead>
+            <table align="center">
+                <b><p>Questions</p></b>
                 <tbody>
+                    <tr align="right">
                     <form action="/list" method="get">
                         <select name="order_by">
                             <option value="">-Order by:</option>
@@ -30,15 +27,18 @@
                         </select>
                         <button type="submit">Sort it mate!</button>
                     </form>
+                    </tr>
                     {% for question in every_question %}
                         <tr>
                             <td><a href="/question/{{ question['id'] }}">{{ question['title'] }}</a></td>
+                            <td><a id="delete" href="/delete_question/{{ question['id'] }}">Delete Question</a></td>
                         </tr>
                     {% endfor %}
 
                 </tbody>
             </table>
-
-        <a href="/list">SHOW ALL QUESTIONS</a>
+            {% if show %}
+                <a href="/list">SHOW ALL QUESTIONS</a>
+            {% endif %}
     </body>
 </html>

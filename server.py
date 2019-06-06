@@ -7,8 +7,8 @@ app = Flask(__name__)
 @app.route('/')
 def route_list():
     every_question = data_manager.first_five_questions()
-
-    return render_template('list.html', every_question=every_question)
+    show = 1
+    return render_template('list.html', every_question=every_question,show=show)
 
 
 @app.route('/list')
@@ -16,9 +16,8 @@ def route_full_list():
     order_by = request.args.get('order_by')
     order_in = request.args.get('order_in')
     every_question = data_manager.sorting_table(order_by,order_in)
-    return_url = request.referrer
-    print(return_url)
-    return render_template('list.html', every_question=every_question)
+    show = None
+    return render_template('list.html', every_question=every_question, show=show)
 
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
@@ -41,7 +40,7 @@ def route_add_question():
                     'message': request.form['message'],
                     'image': request.form['image']}
         data_manager.add_question(question)
-        return redirect('/list')
+        return redirect('/')
     return render_template('add_question.html')
 #
 #
@@ -62,8 +61,6 @@ def edit_answer(answer_id):
         answer = {'id': answer_id,
                   'message': request.form['answer'],
                   'image': request.form['image']}
-        print(answer_id)
-        print(answer)
         data_manager.update_answer(answer,answer_id)
         return redirect('/')
     answer_row = data_manager.get_answer_row(answer_id)
@@ -74,6 +71,8 @@ def edit_answer(answer_id):
 @app.route("/question/<question_id>/vote-down", methods=["GET", "POST"])
 def route_voting(question_id):
     question = data_manager.get_question_by_id(question_id)
+    print(request.url)
+    print(request.referrer)
     if 'vote-up' in str(request.url_rule):
         data_manager.voting(question_id, 1)
     elif 'vote-down' in str(request.url_rule):
@@ -90,6 +89,18 @@ def route_update_question(question_id):
         return redirect('/')
     update_question_row = data_manager.get_data_row(question_id)
     return render_template('edit.html', question_id=question_id, update_question_row=update_question_row)
+
+
+@app.route('/delete_question/<question_id>')
+def delete_question(question_id):
+    data_manager.delete_question(question_id)
+    return redirect('/')
+
+
+@app.route('/delete_answer/<answer_id>')
+def delete_answer(answer_id):
+    data_manager.delete_answer(answer_id)
+    return redirect('/')
 
 
 if __name__ == '__main__':
