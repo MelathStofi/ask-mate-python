@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="static/liststyle.css">
 </head>
 <body>
-    <a href="/"><img src="/static/logo.png"></a>
+    <a id="logo" href="/"><img src="/static/logo.png"></a>
     <form action="/edit/{{ question_id }}" method="post">
         <i>Update Question</i>
         <p>Time: {{ update_question_row['submission_time'] }}</p>

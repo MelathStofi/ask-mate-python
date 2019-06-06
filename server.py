@@ -37,7 +37,7 @@ def route_add_question():
                     'message': request.form['message'],
                     'image': request.form['image']}
         data_manager.add_question(question)
-        return redirect('/list')
+        return redirect('/')
     return render_template('add_question.html')
 #
 #
