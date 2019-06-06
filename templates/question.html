@@ -2,46 +2,49 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Title</title>
-        <link rel="stylesheet" type="text/css" href="/static/liststyle.css">
+        <title>Question</title>
+        <link rel="stylesheet" type="text/css" href="/static/question.css">
+        <a id="logo" href="/"><img src="/static/logo.png"></a>
     </head>
     <body>
-        <a id="logo" href="/"><img src="/static/logo.png"></a>
-        <h2>{{ question['title'] }}</h2><br>
-            Views: {{ question['view_number'] }}<br>
+        <h1>{{ question['title'] }}</h1><br>
 
-        Votes: {{ question['vote_number'] }}  <button><a href="/question/{{question['id']}}/vote-up">Vote up</a></button>
-        <button><a href="/question/{{question['id']}}/vote-down">Vote down</a></button><br>
+        <div id="question">
+            <a id="update" href="/edit/{{ question['id'] }}">Update this question</a><br>
+            <div id="data">
+                Views: {{ question['view_number'] }}<br>
+                Votes: {{ question['vote_number'] }}<br>
+                <button><a href="/question/{{question['id']}}/vote-up">Vote up</a></button><br>
+                <button><a href="/question/{{question['id']}}/vote-down">Vote down</a></button>
+            </div>
+            <h2>Question:</h2><br>
+                {{ question['message'] }}
+            <p>
+                 {%if question['image'] %}
+                    <h2>Image:</h2><br>
+                    <img src="{{ question['image'] }}" height="200" width="300">
+                {% endif %}
+            </p>
 
-            <a href="/edit/{{ question['id'] }}">Update this question</a><br>
-
-        <h4>Question:</h4><br>
-            {{ question['message'] }}
-         <p>
-             {%if question['image'] %}
-                Image:<br>
-                <img src="{{ question['image'] }}" height="200" width="300">
-             {% endif %}
-        </p>
         <p>
-
-            <table align="center" border="2" cellpadding="10">
-            <thead><tr><th><h4>Answers:</h4></th></tr></thead>
-                <tbody>
-                    {% for row in answers %}
-                        <tr><td>{{ row['message'] }}</td>
-                            {%if row['image'] %}
-                                <td><img src="{{ row['image'] }}" height="200" width="300"></td>
-                            {% endif %}
-                            <td> <a href="/answer/{{ row['id'] }}/edit">Edit answer</a><br><br>
-                                <a id="delete" href="/delete_answer/{{ row['id'] }}">Delete answer</a></td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <h2>Answers:</h2>
+            <h3><a href="/question/{{ question['id'] }}/new-answer">Add new answer</a></h3><br>
+            {% if answers['message'] != '' %}
+                <table border="3">
+                    <tbody>
+                        {% for row in answers %}
+                            <tr><td>{{ row['message'] }}</td>
+                                {%if row['image'] %}
+                                    <td><img src="{{ row['image'] }}" height="200" width="300"></td>
+                                {% endif %}
+                                <td> <a href="/answer/{{ row['id'] }}/edit">Edit answer</a><br><br>
+                                    <a id="delete" href="/delete_answer/{{ row['id'] }}">Delete answer</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
         </p>
-        <p>
-            <a href="/question/{{ question['id'] }}/new-answer">Add new answer</a>
-        </p>
+        </div>
     </body>
 </html>

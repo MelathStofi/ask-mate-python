@@ -1,13 +1,14 @@
 body {
     background-color: pink;
-    text-align: center
+    margin-left: 20px;
+    text-align: center;
 }
 
 #logo {
     background-color: #ff9999;
     padding-top: 200px;
-    padding-left: 700px;
-    padding-right: 700px;
+    padding-left: 100px;
+    padding-right: 1150px;
 }
 
 p {
@@ -26,7 +27,7 @@ td {
     text-align: left;
 }
 
-td:hover {
+a:hover {
     background-color: magenta;
 }
 
