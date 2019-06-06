@@ -8,13 +8,10 @@
     <body>
         <a href="/"><img src="/static/logo.png"></a>
         <p><a href="/add-question"><h3>Ask new question</h3>    </a></p>
-            <table border="1" cellpadding="10">
-                <thead>
-                    <tr>
-                        <p><th>Questions</th></p>
-                    </tr>
-                </thead>
+            <table align="center">
+                <b><p>Questions</p></b>
                 <tbody>
+                    <tr align="right">
                     <form action="/list" method="get">
                         <select name="order_by">
                             <option value="">-Order by:</option>
@@ -30,6 +27,7 @@
                         </select>
                         <button type="submit">Sort it mate!</button>
                     </form>
+                    </tr>
                     {% for question in every_question %}
                         <tr>
                             <td><a href="/question/{{ question['id'] }}">{{ question['title'] }}</a></td>
