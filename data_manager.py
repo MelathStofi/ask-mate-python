@@ -26,6 +26,18 @@ def get_every_question(cursor):
 
 
 @connection.connection_handler
+def get_question_search_result(cursor, question_search):
+    cursor.execute("""
+                        SELECT * FROM question
+                        WHERE title ILIKE %(question_search)s
+                        ORDER BY submission_time DESC;""",
+                   {'question_search': question_search})
+    search_result = cursor.fetchall()
+    return search_result
+
+
+
+@connection.connection_handler
 def get_question_by_id(cursor,question_id):
     cursor.execute("""
                         SELECT * FROM question
