@@ -27,6 +27,7 @@ def get_every_question(cursor):
 
 @connection.connection_handler
 def get_question_search_result(cursor, question_search):
+    question_search = '%' + question_search + '%'
     cursor.execute("""
                         SELECT * FROM question
                         WHERE title ILIKE %(question_search)s
