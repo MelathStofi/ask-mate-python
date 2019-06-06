@@ -27,7 +27,7 @@ td {
     text-align: left;
 }
 
-a:hover {
+td:hover {
     background-color: #ff9999;
 }
 
