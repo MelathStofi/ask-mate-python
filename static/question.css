@@ -31,3 +31,7 @@ h1 {
     padding-right: 200px;
 
 }
+
+a:hover {
+    background-color: #ff9999;
+}
