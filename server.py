@@ -67,7 +67,8 @@ def edit_answer(answer_id):
                   'message': request.form['answer'],
                   'image': request.form['image']}
         data_manager.update_answer(answer,answer_id)
-        return redirect('/')
+        question = data_manager.get_question_id_by_answer_id(answer_id)
+        return redirect(url_for("route_display_question", question_id=question['id']))
     answer_row = data_manager.get_answer_row(answer_id)
     return render_template("update_answer.html",answer_id=answer_id,answer_row=answer_row)
 
@@ -106,9 +107,10 @@ def delete_question(question_id):
 @app.route('/delete_answer/<answer_id>')
 def delete_answer(answer_id):
     print(answer_id)
-    #question = data_manager.get_question_by_id(question_id)
     data_manager.delete_answer(answer_id)
-    return redirect('/')
+    question = data_manager.get_question_id_by_answer_id(answer_id)
+    print(question)
+    return redirect(url_for("route_display_question", question_id=question['id']))
 
 
 if __name__ == '__main__':

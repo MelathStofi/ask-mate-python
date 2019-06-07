@@ -187,3 +187,13 @@ def sorting_table(cursor, order_by, order_in):
             )
             questions = cursor.fetchall()
             return questions
+
+
+@connection.connection_handler
+def get_question_id_by_answer_id(cursor, answer_id):
+    cursor.execute("""
+                        SELECT question.id FROM question JOIN answer ON question.id = answer.question_id 
+                        WHERE answer.id = %(answer_id)s""",
+                   {'answer_id': answer_id})
+    question_id = cursor.fetchone()
+    return question_id
