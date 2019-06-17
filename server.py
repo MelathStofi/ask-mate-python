@@ -58,7 +58,7 @@ def add_answer(question_id):
                   'image': request.form['image']}
         data_manager.add_answer(answer, question_id)
         return redirect(f"/question/{question_id}")
-    return render_template("add_answer.html",
+    return render_template("add_and_edit_answer.html",
                             question_id = question_id)
 
 
@@ -72,7 +72,7 @@ def edit_answer(answer_id):
         answer_row = data_manager.get_answer_row(answer_id)
         return redirect(f'/question/{answer_row["question_id"]}')
     answer_row = data_manager.get_answer_row(answer_id)
-    return render_template("update_answer.html",
+    return render_template("add_and_edit_answer.html",
                            answer_id=answer_id,
                            answer_row=answer_row)
 
