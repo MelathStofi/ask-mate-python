@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ "Update Question" if question_id else "Add Question" }}
+{% endblock %}
+
+{% block content %}
+    <form action={{ "/edit/" + question_id if question_id else "/add-question" }} method="post">
+        {% if question_id %}
+            <i>Update Question</i>
+            <p>Time: {{ update_question_row['submission_time'] }}</p>
+            <p>View Number: {{ update_question_row['view_number'] }}</p>
+            <p>Vote Number: {{ update_question_row['vote_number'] }}</p>
+        {% else %}
+            <p>Add Question</p>
+        {% endif %}
+        <p>
+            Question:<br>
+            <input id="question-input" name="title" required maxlength="30" size="50" value="{{ update_question_row['title'] if question_id }}">
+        </p>
+        <p>
+            Details:<br>
+            <textarea id="details-input" name="message" rows="10" cols="50">{{ update_question_row['message'] if question_id }}</textarea>
+        </p>
+        <p>
+            Image URL:<br>
+            <input id="image-input" name="image" type="url" value="{{ update_question_row['image'] if question_id }}">
+        </p>
+        <p>
+            <button type="submit">
+                {{ "Update Question" if question_id else "Add Question"}}
+            </button>
+        </p>
+    </form>
+{% endblock %}
