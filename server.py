@@ -84,9 +84,10 @@ def route_voting(question_id):
     if 'vote-up' in str(request.url_rule):
         data_manager.voting(question_id, 1)
     elif 'vote-down' in str(request.url_rule):
-        data_manager.voting(question_id, -1)
-    return redirect(url_for("route_display_question",
-                            question_id=question['id']))
+
+        data_manager.voting(question_id, )
+        return redirect(url_for("route_display_question",
+                                question_id=question['id']))
 
 
 @app.route('/edit/<question_id>', methods=['GET','POST'])
