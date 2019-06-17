@@ -49,8 +49,27 @@ def add_question():
         data_manager.add_question(question)
         return redirect('/')
     return render_template('add_and_edit_question.html')
-#
-#
+
+
+@app.route('/edit/<question_id>', methods=['GET','POST'])
+def update_question(question_id):
+    if request.method == 'POST':
+        updated_question = {'id': question_id}
+        updated_question.update(request.form)
+        data_manager.update_story(updated_question,question_id)
+        return redirect(f'/question/{question_id}')
+    update_question_row = data_manager.get_data_row(question_id)
+    return render_template('add_and_edit_question.html',
+                           question_id=question_id,
+                           update_question_row=update_question_row)
+
+
+@app.route('/delete_question/<question_id>')
+def delete_question(question_id):
+    data_manager.delete_question(question_id)
+    return redirect('/')
+
+
 @app.route("/question/<question_id>/new-answer", methods=["GET", "POST"])
 def add_answer(question_id):
     if request.method == 'POST':
@@ -77,6 +96,13 @@ def edit_answer(answer_id):
                            answer_row=answer_row)
 
 
+@app.route('/delete_answer/<answer_id>')
+def delete_answer(answer_id):
+    answer = data_manager.get_answer_row(answer_id)
+    data_manager.delete_answer(answer_id)
+    return redirect(f'/question/{answer["question_id"]}')
+
+
 @app.route("/question/<question_id>/vote-up", methods=["GET", "POST"])
 @app.route("/question/<question_id>/vote-down", methods=["GET", "POST"])
 def voting(question_id):
@@ -87,32 +113,6 @@ def voting(question_id):
         data_manager.voting(question_id, -1)
     return redirect(url_for("display_question",
                             question_id=question['id']))
-
-
-@app.route('/edit/<question_id>', methods=['GET','POST'])
-def update_question(question_id):
-    if request.method == 'POST':
-        updated_question = {'id': question_id}
-        updated_question.update(request.form)
-        data_manager.update_story(updated_question,question_id)
-        return redirect(f'/question/{question_id}')
-    update_question_row = data_manager.get_data_row(question_id)
-    return render_template('add_and_edit_question.html',
-                           question_id=question_id,
-                           update_question_row=update_question_row)
-
-
-@app.route('/delete_question/<question_id>')
-def delete_question(question_id):
-    data_manager.delete_question(question_id)
-    return redirect('/')
-
-
-@app.route('/delete_answer/<answer_id>')
-def delete_answer(answer_id):
-    answer = data_manager.get_answer_row(answer_id)
-    data_manager.delete_answer(answer_id)
-    return redirect(f'/question/{answer["question_id"]}')
 
 
 if __name__ == '__main__':
