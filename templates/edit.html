@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Update Question</title>
-    <link rel="icon" type="image/ico" href="/static/only_logo.png" />
-    <link rel="stylesheet" type="text/css" href="/static/liststyle.css">
-</head>
-<body>
-    <a id="logo" href="/"><img src="/static/logo.png"></a>
+{% extends "layout.html" %}
+
+{% block title %}
+    Update Question
+{% endblock %}
+
+{% block content %}
     <form action="/edit/{{ question_id }}" method="post">
         <i>Update Question</i>
         <p>Time: {{ update_question_row['submission_time'] }}</p>
@@ -31,5 +28,4 @@
             </button>
         </p>
     </form>
-</body>
-</html>
+{% endblock %}

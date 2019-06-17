@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>AskMate</title>
-        <link rel="icon" type="image/ico" href="/static/only_logo.png" />
-        <link rel="stylesheet" type="text/css" href="/static/liststyle.css">
-    </head>
-    <body>
-        <a id="logo" href="/"><img src="/static/logo.png"></a>
-        <p><a href="/add-question"><h3>Ask new question</h3></a></p>
+{% extends "layout.html" %}
+
+{% block title %}
+    AskMate
+{% endblock %}
+
+{% block content %}
+    <p><a href="/add-question"><h3>Ask new question</h3></a></p>
             <table align="center">
                 <h1><p>Questions</p></h1>
                 <form action="/list" method="post">
@@ -45,5 +42,4 @@
             {% if show %}
                 <a href="/list">SHOW ALL QUESTIONS</a>
             {% endif %}
-    </body>
-</html>
+{% endblock %}
