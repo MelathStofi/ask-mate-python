@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Update Answer
+{% endblock %}
+
+{% block content %}
+    <form action={{ "/answer/" + answer_id + "/edit" if answer_id else "/question/" + question_id + "/new-answer" }} method="post">
+        <p>Answer:<br>
+        <textarea rows="5" cols="30" name="answer" required>{{ answer_row['message'] if answer_id }}</textarea>
+        </p>
+        <p>
+            Image URL:<br>
+            <input id = "image-url" name="image" type="url" value="{{ answer_row['image'] if answer_id }}">
+        </p>
+        <p>
+            <button type="submit">{{ "Update Answer!" if answer_id else "Add Answer!" }}
+            </button>
+        </p>
+    </form>
+{% endblock %}
