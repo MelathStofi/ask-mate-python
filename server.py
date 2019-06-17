@@ -115,6 +115,16 @@ def voting(question_id):
                             question_id=question['id']))
 
 
+@app.route('/registration', methods=['GET', 'POST'])
+def registration():
+    if request.method == 'POST':
+        account = {'username': request.form['username'],
+                   'password': request.form['password']}
+        data_manager.add_account(account)
+
+    return render_template('registration.html')
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',

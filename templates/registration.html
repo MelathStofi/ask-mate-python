@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "layout.html" %}
 
-</body>
-</html>
+{% block title %}
+    Registration
+{% endblock %}
+
+{% block content %}
+    <p><h2>Registration</h2></p>
+    <form action="/registration" method="post">
+    <p><input name="username" placeholder="Username"></p>
+    <p><input name="password" placeholder="Password"></p>
+    <p><button type="submit">Create your AskMate account</button></p>
+    </form>
+{% endblock %}
