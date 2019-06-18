@@ -127,9 +127,23 @@ def registration():
     return render_template('registration.html')
 
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        account = {'username': request.form['username'],
+                   'password': request.form['password']}
+        match = data_manager.is_account_verified(account)
+        print(account)
+        print(match)
+
+        return redirect("/")
+
+    return render_template('login.html')
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
-        port=3000,
+        port=8000,
         debug=True
     )

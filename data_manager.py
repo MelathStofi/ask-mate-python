@@ -236,3 +236,15 @@ def add_account(cursor, account):
                         'password': password_hash})
     else:
         return "Username already in use!"
+
+
+@connection.connection_handler
+def is_account_verified(cursor,account):
+    cursor.execute("""
+                        SELECT password FROM user_account
+                        WHERE username = %(username)s;
+                        """,
+                   {'username':account['username']})
+    password = cursor.fetchone()
+    account_search = verify_password(account['password'],password['password'])
+    return account_search
