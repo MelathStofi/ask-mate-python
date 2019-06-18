@@ -132,10 +132,8 @@ def login():
     if request.method == 'POST':
         account = {'username': request.form['username'],
                    'password': request.form['password']}
-        match = data_manager.is_account_verified(account)
-        print(account)
-        print(match)
-
+        is_match = data_manager.is_account_verified(account)
+        print(is_match)
         return redirect("/")
 
     return render_template('login.html')
