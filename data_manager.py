@@ -218,5 +218,21 @@ def get_question_id_by_answer_id(cursor, answer_id):
 
 
 @connection.connection_handler
-def add_account(cursor):
-    pass
+def add_account(cursor, account):
+    password_hash = hash_password(account['password'])
+    cursor.execute("""
+                        SELECT * FROM user_account 
+                        WHERE username = %(username)s;
+                        """,
+                   {'username': account['username'],
+                    'password': password_hash})
+    account_search = cursor.fetchone()
+    if account_search is None:
+        cursor.execute("""  
+                                INSERT INTO user_account (username, password) 
+                                VALUES (%(username)s, %(password)s)
+                                """,
+                       {'username': account['username'],
+                        'password': password_hash})
+    else:
+        return "Username already in use!"

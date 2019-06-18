@@ -120,7 +120,9 @@ def registration():
     if request.method == 'POST':
         account = {'username': request.form['username'],
                    'password': request.form['password']}
-        data_manager.add_account(account)
+        exists = data_manager.add_account(account)
+
+        return render_template('registration.html', account=account, exists=exists)
 
     return render_template('registration.html')
 
