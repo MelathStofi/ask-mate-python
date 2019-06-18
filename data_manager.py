@@ -229,8 +229,8 @@ def add_account(cursor, account):
     account_search = cursor.fetchone()
     if account_search is None:
         cursor.execute("""  
-                                INSERT INTO user_account (username, password) 
-                                VALUES (%(username)s, %(password)s)
+                                INSERT INTO user_account (username, password, registration_time) 
+                                VALUES (%(username)s, %(password)s, CURRENT_TIMESTAMP)
                                 """,
                        {'username': account['username'],
                         'password': password_hash})

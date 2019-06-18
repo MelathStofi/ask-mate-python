@@ -70,7 +70,8 @@ DROP TABLE IF EXISTS public.user_account;
 CREATE TABLE user_account (
     id serial NOT NULL,
     username text,
-    password text
+    password text,
+    registration_time timestamp without time zone
 );
 
 
