@@ -15,6 +15,7 @@ ALTER TABLE IF EXISTS ONLY public.question_tag DROP CONSTRAINT IF EXISTS pk_ques
 ALTER TABLE IF EXISTS ONLY public.question_tag DROP CONSTRAINT IF EXISTS fk_question_id CASCADE;
 ALTER TABLE IF EXISTS ONLY public.tag DROP CONSTRAINT IF EXISTS pk_tag_id CASCADE;
 ALTER TABLE IF EXISTS ONLY public.question_tag DROP CONSTRAINT IF EXISTS fk_tag_id CASCADE;
+ALTER TABLE IF EXISTS ONLY public.user_account DROP CONSTRAINT  IF EXISTS pk_user_account_id CASCADE;
 
 DROP TABLE IF EXISTS public.question;
 DROP SEQUENCE IF EXISTS public.question_id_seq;
@@ -65,6 +66,14 @@ CREATE TABLE tag (
 );
 
 
+DROP TABLE IF EXISTS public.user_account;
+CREATE TABLE user_account (
+    id serial NOT NULL,
+    username text,
+    password text
+);
+
+
 ALTER TABLE ONLY answer
     ADD CONSTRAINT pk_answer_id PRIMARY KEY (id);
 
@@ -76,6 +85,9 @@ ALTER TABLE ONLY question
 
 ALTER TABLE ONLY question_tag
     ADD CONSTRAINT pk_question_tag_id PRIMARY KEY (question_id, tag_id);
+
+ALTER TABLE ONLY user_account
+    ADD CONSTRAINT pk_user_account_id PRIMARY KEY (id);
 
 ALTER TABLE ONLY tag
     ADD CONSTRAINT pk_tag_id PRIMARY KEY (id);

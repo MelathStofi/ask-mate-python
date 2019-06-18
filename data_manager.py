@@ -1,7 +1,18 @@
 import connection
 from psycopg2 import sql
+import bcrypt
 
 from operator import itemgetter
+
+
+def hash_password(plain_text_password):
+    hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+    return hashed_bytes.decode('utf-8')
+
+
+def verify_password(plain_text_password, hashed_password):
+    hashed_bytes_password = hashed_password.encode('utf-8')
+    return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_bytes_password)
 
 
 @connection.connection_handler
@@ -204,3 +215,8 @@ def get_question_id_by_answer_id(cursor, answer_id):
                    {'answer_id': answer_id})
     question_id = cursor.fetchone()
     return question_id
+
+
+@connection.connection_handler
+def add_account(cursor):
+    pass
