@@ -1,11 +1,18 @@
-from flask import Flask, render_template, redirect, request, url_for
+from flask import Flask, render_template, redirect, request, url_for, session, escape
 import data_manager
+import os
 
 app = Flask(__name__)
-
+app.secret_key = os.urandom(24)
 
 @app.route('/')
 def list():
+    if 'username' in session:
+        every_question = data_manager.first_five_questions()
+        show = 1
+        return render_template('list.html',
+                               every_question=every_question,
+                               show=show, username=escape(session['username']))
     every_question = data_manager.first_five_questions()
     show = 1
     return render_template('list.html',
@@ -135,6 +142,8 @@ def login():
         match = data_manager.is_account_verified(account)
         print(account)
         print(match)
+        if match is True:
+            session['username'] = account['username']
 
         return redirect("/")
 
