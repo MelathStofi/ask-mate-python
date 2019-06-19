@@ -6,7 +6,6 @@
 
 {% block content %}
     <h1>{{ question['title'] }}</h1><br>
-
         <div id="question">
             <div id="data">
                 Views: {{ question['view_number'] }}<br>
@@ -31,15 +30,17 @@
             <h2>Answers:</h2>
             <h3><a href="/question/{{ question['id'] }}/new-answer">Add new answer</a></h3><br>
             {% if answers['message'] != '' %}
-                <table border="3">
+                <table>
                     <tbody>
                         {% for row in answers %}
                             <tr><td>{{ row['message'] }}</td>
                                 {%if row['image'] %}
                                     <td><img src="{{ row['image'] }}" height="200" width="300"></td>
                                 {% endif %}
-                                <td> <a href="/answer/{{ row['id'] }}/edit">Edit answer</a><br><br>
-                                    <a class="delete" href="/delete_answer/{{ row['id'] }}">Delete answer</a></td>
+                                <td>
+                                    <a href="/answer/{{ row['id'] }}/edit">Edit answer</a><br><br>
+                                    <a class="delete" href="/delete_answer/{{ row['id'] }}">Delete answer</a>
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>

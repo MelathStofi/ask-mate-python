@@ -1,37 +1,87 @@
 body {
+    font-family: Consolas;
     background-color: pink;
-    margin-left: 100px;
+    margin-left: 20em;
+    margin-right: 20em;
 }
 
-#logo {
+#page_logo {
+    border-radius: 3px;
     background-color: #ff9999;
-    padding-top: 200px;
-    padding-left: 100px;
-    padding-right: 1150px;
+    box-shadow: 0 0.5px 2px rgba(0, 0, 0, .9);
 }
 
 #delete {
     color: red;
 }
 
-#question {
-    padding-left: 150px;
-    padding-top: 110px;
-    font-size: 16px;
-}
-h1 {
-    margin-bottom: -150px;
-    text-align: center;
-    font-size: 40px;
-
-}
-
-#data {
-    text-align: right;
-    padding-right: 200px;
-
-}
-
 a:hover {
     background-color: #ff9999;
+}
+
+table {
+    margin: auto;
+    width: calc(100%);
+}
+
+tr {
+    background-color: #ff9999;
+}
+
+td {
+    padding: 1em;
+    border-radius: 2px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, .9);
+}
+
+#search_bar {
+    margin-right: 20em;
+}
+
+input {
+    padding: 0.3em;
+    border-radius: 5px;
+}
+
+textarea {
+    padding: 0.3em;
+    border-radius: 5px;
+}
+
+#ordering {
+    margin-left: calc(100% - 21em);
+}
+
+#header {
+    margin-left: calc(100% - 5em);
+}
+
+.card {
+    padding: 0.5em;
+
+}
+
+button {
+    border-radius: 5px;
+    width: auto;
+    background-color: #ff9999;
+    border: black;
+    color: indigo;
+    padding: 0.3em;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    box-shadow: 0 0.5px 2px rgba(0, 0, 0, .9);
+}
+
+select {
+    border-radius: 5px;
+    background-color: #ff9999;
+    border: black;
+    color: indigo;
+    padding: 0.2em;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    box-shadow: 0 0.5px 2px rgba(0, 0, 0, .9);
 }
