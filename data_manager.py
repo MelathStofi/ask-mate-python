@@ -5,16 +5,6 @@ import bcrypt
 from operator import itemgetter
 
 
-def hash_password(plain_text_password):
-    hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
-    return hashed_bytes.decode('utf-8')
-
-
-def verify_password(plain_text_password, hashed_password):
-    hashed_bytes_password = hashed_password.encode('utf-8')
-    return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_bytes_password)
-
-
 @connection.connection_handler
 def first_five_questions(cursor):
     cursor.execute("""
@@ -49,7 +39,6 @@ def get_question_search_result(cursor, question_search):
     return search_result
 
 
-
 @connection.connection_handler
 def get_question_by_id(cursor,question_id):
     cursor.execute("""
@@ -70,6 +59,7 @@ def get_answers_by_id(cursor, question_id):
                    {'question_id': question_id})
     answers = cursor.fetchall()
     return answers
+
 
 
 @connection.connection_handler
@@ -173,7 +163,6 @@ def voting(cursor, question_id, vote_act):
                        {'question_id': question_id})
 
 
-
 @connection.connection_handler
 def view_counter(cursor, question_id):
     cursor.execute("""
@@ -206,6 +195,7 @@ def sorting_table(cursor, order_by, order_in):
             return questions
 
 
+
 @connection.connection_handler
 def get_question_id_by_answer_id(cursor, answer_id):
     cursor.execute("""
@@ -217,34 +207,42 @@ def get_question_id_by_answer_id(cursor, answer_id):
     return question_id
 
 
+def hash_password(plain_text_password):
+    hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+    return hashed_bytes.decode('utf-8')
+
+
+def verify_password(plain_text_password, hashed_password):
+    hashed_bytes_password = hashed_password.encode('utf-8')
+    return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_bytes_password)
+
+
 @connection.connection_handler
-def add_account(cursor, account):
-    password_hash = hash_password(account['password'])
+def search_account(cursor, username):
     cursor.execute("""
                         SELECT * FROM user_account 
                         WHERE username = %(username)s;
                         """,
-                   {'username': account['username'],
-                    'password': password_hash})
-    account_search = cursor.fetchone()
-    if account_search is None:
-        cursor.execute("""  
-                                INSERT INTO user_account (username, password, registration_time) 
-                                VALUES (%(username)s, %(password)s, CURRENT_TIMESTAMP)
-                                """,
-                       {'username': account['username'],
-                        'password': password_hash})
-    else:
-        return "Username already in use!"
+                   {'username': username})
+    return cursor.fetchone()
 
 
 @connection.connection_handler
-def is_account_verified(cursor,account):
-    cursor.execute("""
-                        SELECT password FROM user_account
-                        WHERE username = %(username)s;
-                        """,
-                   {'username':account['username']})
-    password = cursor.fetchone()
-    account_search = verify_password(account['password'],password['password'])
-    return account_search
+def add_account(cursor, account):
+    password_hash = hash_password(account['password'])
+    account_search = search_account(account['username'])
+    if account_search is not None:
+        return "Username already in use!"
+    else:
+        cursor.execute("""  
+                            INSERT INTO user_account (username, password, registration_time) 
+                            VALUES (%(username)s, %(password)s, CURRENT_TIMESTAMP)
+                            """,
+                       {'username': account['username'],
+                        'password': password_hash})
+
+
+def is_account_verified(account):
+    account_search = search_account(account['username'])
+    is_verified = verify_password(account['password'],account_search['password'])
+    return is_verified
