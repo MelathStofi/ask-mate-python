@@ -118,9 +118,33 @@ def voting(question_id):
         # return redirect(url_for("route_display_question",
         #                         question_id=question['id']))
 
+@app.route('/registration', methods=['GET', 'POST'])
+def registration():
+    if request.method == 'POST':
+        account = {'username': request.form['username'],
+                   'password': request.form['password']}
+        exists = data_manager.add_account(account)
+
+        return render_template('registration.html', account=account, exists=exists)
+
+    return render_template('registration.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        account = {'username': request.form['username'],
+                   'password': request.form['password']}
+        is_match = data_manager.is_account_verified(account)
+        print(is_match)
+        return redirect("/")
+
+    return render_template('login.html')
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
-        port=3000,
+        port=8000,
         debug=True
     )

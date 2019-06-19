@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %} {% endblock %}</title>
-    <link rel="icon" type="image/ico" href="/static/only_logo.png" />
+    <link rel="icon" type="image/ico" href="/static/images/only_logo.png" />
     <!--link rel="stylesheet" type="text/css" href="/static/question.css"-->
 </head>
 <body>
-    <a id="logo" href="/"><img src="/static/logo.png"></a>
+    <a id="logo" href="/"><img src="/static/images/logo.png"></a>
+    <div id="header">
+        <a href="/registration">Registration</a>
+        <a href="/login">Login</a>
+    </div>
     <div class="content-wrapper">
         {% block content %} {% endblock %}
     </div>
