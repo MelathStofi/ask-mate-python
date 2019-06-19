@@ -5,6 +5,7 @@ import os
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
+
 @app.route('/')
 def list():
     every_question = data_manager.first_five_questions()
@@ -140,8 +141,11 @@ def login():
         is_match = data_manager.is_account_verified(account)
         if is_match is True:
             session['username'] = account['username']
-
-        return redirect("/")
+            return redirect("/")
+        else:
+            return render_template('login.html',
+                                   account=account,
+                                   match_message="Incorrect username or password!")
 
     return render_template('login.html')
 
