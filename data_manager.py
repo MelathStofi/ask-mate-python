@@ -264,9 +264,24 @@ def id_search_by_account(cursor,username):
 
 @connection.connection_handler
 def get_questions_by_user_id(cursor, user_id):
-    pass
+    cursor.execute("""
+                        SELECT * FROM question
+                        WHERE user_id = %(user_id)s
+                        """,
+                   {'user_id': user_id})
+    user_questions = cursor.fetchall()
+    return user_questions
+
 
 
 @connection.connection_handler
 def get_answered_questions_by_user_id(cursor, user_id):
-    pass
+    cursor.execute("""
+                        SELECT * FROM question
+                        JOIN answer
+                            ON question.id = answer.question_id
+                        WHERE answer.user_id = %(user_id)s
+                        """,
+                   {'user_id': user_id})
+    user_questions = cursor.fetchall()
+    return user_questions

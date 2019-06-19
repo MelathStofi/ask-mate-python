@@ -11,4 +11,5 @@
     <p><input name="password" type="password" placeholder="Password" value="{{ account['password'] if account }}" required></p>
     <p><button type="submit">Login to your AskMate account</button></p>
     </form>
+    {{ match_message if match_message }}
 {% endblock %}

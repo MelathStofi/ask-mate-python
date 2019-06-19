@@ -143,7 +143,6 @@ def login():
             user_account = data_manager.search_account(account['username'])
             session['user_id'] = user_account['id']
             session['username'] = user_account['username']
-            print(session)
             return redirect("/")
         else:
             return render_template('login.html',
