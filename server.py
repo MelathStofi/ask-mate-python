@@ -114,9 +114,9 @@ def voting(question_id):
     return redirect(url_for("display_question",
                             question_id=question['id']))
 
-        data_manager.voting(question_id, )
-        return redirect(url_for("route_display_question",
-                                question_id=question['id']))
+        # data_manager.voting(question_id, )
+        # return redirect(url_for("route_display_question",
+        #                         question_id=question['id']))
 
 if __name__ == '__main__':
     app.run(
