@@ -5,31 +5,38 @@
 {% endblock %}
 
 {% block content %}
-    <p><a href="/add-question"><h3>Ask new question</h3></a></p>
-            <table align="center">
-                <h1><p>Questions</p></h1>
+    <div class="content">
+        <p>
+            <a href="/add-question"><h3>Ask new question</h3></a>
+        </p>
+        <div class="card">
+            <p>Questions</p>
+            <div id="search_bar">
                 <form action="/list" method="post">
                     <input name="search">
                     <button type="submit">Search</button>
-                </form><br><br>
+                </form>
+            </div>
+            <div id="ordering">
+                <form action="/list" method="get">
+                    <select name="order_by">
+                        <option value="">-Order by:</option>
+                        <option value="submission_time">Date</option>
+                        <option value="view_number">View Numbers</option>
+                        <option value="vote_number">Votes</option>
+                        <option value="title">Question Name</option>
+                    </select>
+                    <select name="order_in">
+                        <option value="">-Order in:</option>
+                        <option value="ASC">Ascending</option>
+                        <option value="DESC">Descending</option>
+                    </select>
+                    <button type="submit">Sort it mate!</button>
+                </form>
+            </div>
+            <table>
                 <tbody>
-                    <tr align="right">
-                    <form action="/list" method="get">
-                        <select name="order_by">
-                            <option value="">-Order by:</option>
-                            <option value="submission_time">Date</option>
-                            <option value="view_number">View Numbers</option>
-                            <option value="vote_number">Votes</option>
-                            <option value="title">Question Name</option>
-                        </select>
-                        <select name="order_in">
-                            <option value="">-Order in:</option>
-                            <option value="ASC">Ascending</option>
-                            <option value="DESC">Descending</option>
-                        </select>
-                        <button type="submit">Sort it mate!</button>
-                    </form>
-                    </tr>
+
                     {% for question in every_question %}
                         <tr>
                             <td><a href="/question/{{ question['id'] }}">{{ question['title'] }}</a></td>
@@ -38,8 +45,10 @@
                     {% endfor %}
 
                 </tbody>
-            </table><br>
-            {% if show %}
-                <a href="/list">SHOW ALL QUESTIONS</a>
-            {% endif %}
+            </table>
+        </div><br>
+        {% if show %}
+            <a href="/list">SHOW ALL QUESTIONS</a>
+        {% endif %}
+    </div>
 {% endblock %}

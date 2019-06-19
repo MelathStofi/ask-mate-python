@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <title>{% block title %} {% endblock %}</title>
     <link rel="icon" type="image/ico" href="/static/images/only_logo.png" />
-    <!--link rel="stylesheet" type="text/css" href="/static/question.css"-->
+    <link rel="stylesheet" type="text/css" href="/static/question.css">
 </head>
 <body>
-    <a id="logo" href="/"><img src="/static/images/logo.png"></a>
+    <div id="page_logo">
+        <a id="logo" href="/"><img src="/static/images/logo.png"></a>
+    </div>
     <div id="header">
         {% if session %}
             <h3><a href="/user/{{ session['user_id'] }}">{{ session['username'] }}</a></h3>
