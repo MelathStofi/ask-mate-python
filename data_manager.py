@@ -82,7 +82,8 @@ def add_question(cursor, question):
                         """,
                    {'question_title': question['title'],
                     'question_message': question['message'],
-                    'question_image': question['image'], 'account_id': question['user_id']})
+                    'question_image': question['image'],
+                    'account_id': question['user_id']})
 
 
 @connection.connection_handler
@@ -252,11 +253,25 @@ def is_account_verified(account):
 
 
 @connection.connection_handler
-def id_search_by_account(cursor,username):
+def get_questions_by_user_id(cursor, user_id):
     cursor.execute("""
-                    SELECT id FROM user_account
-                    WHERE username = %(username)s
-                    """,
-                   {'username':username})
-    account_id = cursor.fetchone()
-    return account_id
+                        SELECT * FROM question
+                        WHERE user_id = %(user_id)s
+                        """,
+                   {'user_id': user_id})
+    user_questions = cursor.fetchall()
+    return user_questions
+
+
+
+@connection.connection_handler
+def get_answered_questions_by_user_id(cursor, user_id):
+    cursor.execute("""
+                        SELECT * FROM question
+                        JOIN answer
+                            ON question.id = answer.question_id
+                        WHERE answer.user_id = %(user_id)s
+                        """,
+                   {'user_id': user_id})
+    user_questions = cursor.fetchall()
+    return user_questions
