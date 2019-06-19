@@ -82,7 +82,8 @@ def add_question(cursor, question):
                         """,
                    {'question_title': question['title'],
                     'question_message': question['message'],
-                    'question_image': question['image'], 'account_id': question['user_id']})
+                    'question_image': question['image'],
+                    'account_id': question['user_id']})
 
 
 @connection.connection_handler
