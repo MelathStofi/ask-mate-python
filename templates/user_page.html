@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    User Page
+{% endblock %}
+
+{% block content %}
+    <p><h1>{{ username }}</h1></p>
+    <table>
+        <thead>
+            My questions
+        </thead>
+        <tbody>
+            {% if questions %}
+                {% for question in questions %}
+                    <tr>
+                        <td><a href="/question/{{ question['id'] }}">{{ question['title'] }}</a></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr><td>You have no questions yet</td></tr>
+            {% endif %}
+        </tbody>
+    </table>
+    <table>
+        <thead>
+            My answers
+        </thead>
+        <tbody>
+            {% if answered_questions %}
+                {% for question in answered_questions %}
+                    <tr>
+                        <td><a href="/question/{{ question['id'] }}">{{ question['title'] }}</a></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr><td>You have no answers yet</td></tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <table>
+        <thead>
+            My comments
+        </thead>
+        <tbody>
+            {% if comments %}
+                {% for question in user_questions %}
+                    <tr>
+                        <td><a href="/question/{{ question['id'] }}">{{ question['title'] }}</a></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr><td>You have no comments yet</td></tr>
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock %}

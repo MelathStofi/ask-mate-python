@@ -254,9 +254,19 @@ def is_account_verified(account):
 @connection.connection_handler
 def id_search_by_account(cursor,username):
     cursor.execute("""
-                    SELECT id FROM user_account
-                    WHERE username = %(username)s
-                    """,
+                        SELECT id FROM user_account
+                        WHERE username = %(username)s
+                        """,
                    {'username':username})
     account_id = cursor.fetchone()
     return account_id
+
+
+@connection.connection_handler
+def get_questions_by_user_id(cursor, user_id):
+    pass
+
+
+@connection.connection_handler
+def get_answered_questions_by_user_id(cursor, user_id):
+    pass

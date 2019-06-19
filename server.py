@@ -140,7 +140,10 @@ def login():
                    'password': request.form['password']}
         is_match = data_manager.is_account_verified(account)
         if is_match is True:
-            session['username'] = account['username']
+            user_account = data_manager.search_account(account['username'])
+            session['user_id'] = user_account['id']
+            session['username'] = user_account['username']
+            print(session)
             return redirect("/")
         else:
             return render_template('login.html',
@@ -148,6 +151,19 @@ def login():
                                    match_message="Incorrect username or password!")
 
     return render_template('login.html')
+
+
+@app.route('/user/<user_id>')
+def user_page(user_id):
+    username = session['username']
+    questions = data_manager.get_questions_by_user_id(user_id)
+    answered_questions = data_manager.get_answered_questions_by_user_id(user_id)
+    # comments =
+
+    return render_template('user_page.html',
+                           username=username,
+                           questions=questions,
+                           answered_questions=answered_questions)
 
 
 if __name__ == '__main__':
