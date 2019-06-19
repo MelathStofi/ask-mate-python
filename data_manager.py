@@ -76,12 +76,13 @@ def get_answer_row(cursor,answer_id):
 @connection.connection_handler
 def add_question(cursor, question):
     cursor.execute("""
-                        INSERT INTO question (submission_time, view_number, vote_number, title, message, image)
-                        VALUES (CURRENT_TIMESTAMP, 0, 0, %(question_title)s, %(question_message)s, %(question_image)s)
+                        INSERT INTO question (submission_time, view_number, vote_number, title, message, image, user_id)
+                        VALUES (CURRENT_TIMESTAMP, 0, 0, %(question_title)s, %(question_message)s,
+                        %(question_image)s,%(account_id)s);
                         """,
                    {'question_title': question['title'],
                     'question_message': question['message'],
-                    'question_image': question['image']})
+                    'question_image': question['image'], 'account_id': question['user_id']})
 
 
 @connection.connection_handler
@@ -105,11 +106,14 @@ def delete_answer(cursor,answer_id):
 @connection.connection_handler
 def add_answer(cursor, answer, question_id):
     cursor.execute("""
-                        INSERT INTO answer (submission_time, vote_number, question_id, message, image)
-                        VALUES (CURRENT_TIMESTAMP, 0, %(question_id)s, %(answer_message)s, %(answer_image)s)""",
+                        INSERT INTO answer (submission_time, vote_number, question_id, message, image, user_id)
+                        VALUES (CURRENT_TIMESTAMP, 0, %(question_id)s, %(answer_message)s,
+                        %(answer_image)s, %(user_id)s)
+                        """,
                    {'question_id': question_id,
                     'answer_message': answer['message'],
-                    'answer_image': answer['image']})
+                    'answer_image': answer['image'],
+                    'user_id': answer['user_id']})
 
 
 @connection.connection_handler
@@ -195,7 +199,6 @@ def sorting_table(cursor, order_by, order_in):
             return questions
 
 
-
 @connection.connection_handler
 def get_question_id_by_answer_id(cursor, answer_id):
     cursor.execute("""
@@ -246,3 +249,14 @@ def is_account_verified(account):
     account_search = search_account(account['username'])
     is_verified = verify_password(account['password'],account_search['password'])
     return is_verified
+
+
+@connection.connection_handler
+def id_search_by_account(cursor,username):
+    cursor.execute("""
+                    SELECT id FROM user_account
+                    WHERE username = %(username)s
+                    """,
+                   {'username':username})
+    account_id = cursor.fetchone()
+    return account_id

@@ -51,9 +51,11 @@ def display_question(question_id):
 @app.route('/add-question', methods=['GET', 'POST'])
 def add_question():
     if request.method == 'POST':
+        account_id = data_manager.id_search_by_account(session['username'])
         question = {'title': request.form['title'],
                     'message': request.form['message'],
-                    'image': request.form['image']}
+                    'image': request.form['image'],
+                    'user_id':account_id['id']}
         data_manager.add_question(question)
         return redirect('/')
     return render_template('add_and_edit_question.html')
@@ -81,12 +83,14 @@ def delete_question(question_id):
 @app.route("/question/<question_id>/new-answer", methods=["GET", "POST"])
 def add_answer(question_id):
     if request.method == 'POST':
+        account_id = data_manager.id_search_by_account(session['username'])
         answer = {'message': request.form['answer'],
-                  'image': request.form['image']}
+                  'image': request.form['image'],
+                  'user_id': account_id['id']}
         data_manager.add_answer(answer, question_id)
         return redirect(f"/question/{question_id}")
     return render_template("add_and_edit_answer.html",
-                            question_id = question_id)
+                           question_id=question_id)
 
 
 @app.route("/answer/<answer_id>/edit", methods=["GET","POST"])
