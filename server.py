@@ -150,6 +150,13 @@ def login():
     return render_template('login.html')
 
 
+@app.route('/logout')
+def logout():
+    session.pop('username')
+    session.pop('user_id')
+    return redirect('/')
+
+
 @app.route('/user/<user_id>')
 def user_page(user_id):
     username = session['username']
