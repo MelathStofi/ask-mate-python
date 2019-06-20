@@ -61,6 +61,17 @@ def get_answers_by_id(cursor, question_id):
     return answers
 
 
+@connection.connection_handler
+def get_comments_to_answers(cursor, question_id):
+    cursor.execute("""
+                        SELECT comment.answer_id, comment.message FROM comment
+                        JOIN answer ON comment.answer_id = answer.id
+                        WHERE %(question_id)s = answer.question_id;
+                        """,
+                   {'question_id': question_id})
+    comments = cursor.fetchall()
+    return comments
+
 
 @connection.connection_handler
 def get_answer_row(cursor,answer_id):
