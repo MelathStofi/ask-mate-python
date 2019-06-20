@@ -74,7 +74,8 @@ CREATE TABLE user_account (
     id serial NOT NULL,
     username text,
     password text,
-    registration_time timestamp without time zone
+    registration_time timestamp without time zone,
+    reputation integer NOT NULL
 );
 
 

@@ -125,14 +125,21 @@ def add_comment_to_answer(answer_id):
 @app.route("/question/<question_id>/vote-up", methods=["GET", "POST"])
 @app.route("/question/<question_id>/vote-down", methods=["GET", "POST"])
 def voting(question_id):
+    user_id = data_manager.get_user_id_by_question(question_id)
     question = data_manager.get_question_by_id(question_id)
     if 'vote-up' in str(request.url_rule):
         data_manager.voting(question_id, 1)
+        print(user_id)
+        data_manager.update_reputation(user_id['user_id'], 5)
     elif 'vote-down' in str(request.url_rule):
         data_manager.voting(question_id, -1)
+        data_manager.update_reputation(user_id['user_id'], -2)
     return redirect(url_for("display_question",
                             question_id=question['id']))
 
+        # data_manager.voting(question_id, )
+        # return redirect(url_for("route_display_question",
+        #                         question_id=question['id']))
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
@@ -174,15 +181,33 @@ def logout():
 
 @app.route('/user/<user_id>')
 def user_page(user_id):
-    username = session['username']
+    if session is True:
+        user_login = True
+        questions = data_manager.get_questions_by_user_id(user_id)
+        answered_questions = data_manager.get_answered_questions_by_user_id(user_id)
+        reputation = data_manager.get_reputation_by_user_id(user_id)
+        return render_template('user_page.html',
+                               questions=questions,
+                               user_login=user_login,
+                               answered_questions=answered_questions,
+                               reputation = reputation)
+
+    username = data_manager.get_user_by_id(user_id)
     questions = data_manager.get_questions_by_user_id(user_id)
     answered_questions = data_manager.get_answered_questions_by_user_id(user_id)
     # comments =
 
     return render_template('user_page.html',
-                           username=username,
                            questions=questions,
+                           username=username,
                            answered_questions=answered_questions)
+
+
+@app.route('/users')
+def all_users():
+    all_user_info = data_manager.get_all_users()
+
+    return render_template('users.html',all_users=all_user_info)
 
 
 if __name__ == '__main__':

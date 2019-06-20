@@ -5,7 +5,13 @@
 {% endblock %}
 
 {% block content %}
-    <p><h1>{{ username }}</h1></p>
+    <p><h1>
+    {% if user_login == True %}
+        {{ session['username'] }}
+    {% else %}
+        {{ username['username'] }}</h1><br>
+        User Reputation: {{ username['reputation'] }}
+    {% endif %}</p>
     <table>
         <thead>
             My questions
