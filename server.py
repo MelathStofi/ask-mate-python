@@ -53,8 +53,11 @@ def add_question():
                     'user_id': session['user_id']}
         data_manager.add_question(question)
         return redirect('/')
-    update_question_row = True
-    return render_template('add_and_edit_question.html',update_question_row=update_question_row)
+    if len(session) == 0:
+        session_check = False
+    else:
+        session_check = True
+    return render_template('add_question.html', session_check=session_check)
 
 
 @app.route('/edit/<question_id>', methods=['GET','POST'])
@@ -65,7 +68,6 @@ def update_question(question_id):
         data_manager.update_story(updated_question,question_id)
         return redirect(f'/question/{question_id}')
     update_question_row = data_manager.get_data_row(question_id)
-    print(update_question_row)
     return render_template('add_and_edit_question.html',
                            question_id=question_id,
                            update_question_row=update_question_row)
@@ -146,7 +148,7 @@ def registration():
                    'password': request.form['password']}
         exists = data_manager.add_account(account)
 
-        return render_template('registration.html', account=account, exists=exists)
+        return render_template('login.html', account=account, exists=exists)
 
     return render_template('registration.html')
 
@@ -181,6 +183,7 @@ def logout():
 def user_page(user_id):
     if session is True:
         user_login = True
+        print(user_login)
         questions = data_manager.get_questions_by_user_id(user_id)
         answered_questions = data_manager.get_answered_questions_by_user_id(user_id)
         reputation = data_manager.get_reputation_by_user_id(user_id)

@@ -7,8 +7,8 @@
 {% block content %}
     <p><h2>Registration</h2></p>
     <form action="/registration" method="post">
-    <p><input name="username" placeholder="Username" value="{{ account['username'] if account }}" required></p>
-    <p><input name="password" type="password" placeholder="Password" value="{{ account['password'] if account }}" required></p>
+    <p><input name="username" placeholder="Username" required></p>
+    <p><input name="password" type="password" placeholder="Password" required></p>
     <p><button type="submit">Create your AskMate account</button></p>
     {{ exists if exists }}
     </form>
