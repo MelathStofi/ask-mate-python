@@ -34,12 +34,16 @@ def full_list():
 def display_question(question_id):
     question = data_manager.get_question_by_id(question_id)
     answers = data_manager.get_answers_by_id(question_id)
+    comments_to_answer = data_manager.get_comments_to_answers(question_id)
+    print(answers)
+    print(comments_to_answer)
     if request.url != request.referrer:
         data_manager.view_counter(question_id)
 
     return render_template('question.html',
                            question=question,
-                           answers=answers)
+                           answers=answers,
+                           comments_to_answer=comments_to_answer)
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
