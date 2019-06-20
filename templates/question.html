@@ -26,26 +26,37 @@
                 {% endif %}
             </p>
 
-        <p>
-            <h2>Answers:</h2>
-            <h3><a href="/question/{{ question['id'] }}/new-answer">Add new answer</a></h3><br>
-            {% if answers['message'] != '' %}
-                <table>
-                    <tbody>
-                        {% for row in answers %}
-                            <tr><td>{{ row['message'] }}</td>
-                                {%if row['image'] %}
-                                    <td><img src="{{ row['image'] }}" height="200" width="300"></td>
+            <p>
+                <h2>Answers:</h2>
+                <h3><a href="/question/{{ question['id'] }}/new-answer">Add new answer</a></h3><br>
+                {% if answers['message'] != '' %}
+                    <table>
+                        <tbody>
+                            {% for row in answers %}
+                                <tr><td>{{ row['message'] }}</td>
+                                    {%if row['image'] %}
+                                        <td><img src="{{ row['image'] }}" height="200" width="300"></td>
+                                    {% endif %}
+                                    <td>
+                                        <a href="/answer/{{ row['id'] }}/edit">Edit answer</a><br><br>
+                                        <a class="delete" href="/delete_answer/{{ row['id'] }}">Delete answer</a>
+                                    </td>
+                                </tr>
+                                {% if row['id'] == comments_to_answer['answer_id'] %}
+                                    <tr>
+                                        <td>
+                                            <ul>
+                                                {% for comment in comments_to_answer %}
+                                                    <li>{{ comment['message'] }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                    </tr>
                                 {% endif %}
-                                <td>
-                                    <a href="/answer/{{ row['id'] }}/edit">Edit answer</a><br><br>
-                                    <a class="delete" href="/delete_answer/{{ row['id'] }}">Delete answer</a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            {% endif %}
-        </p>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </p>
         </div>
 {% endblock %}

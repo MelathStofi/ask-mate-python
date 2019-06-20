@@ -10,7 +10,7 @@
             <a href="/add-question"><h3>Ask new question</h3></a>
         </p>
         <div class="card">
-            <p>Questions</p>
+            <h2><p>Questions</p></h2>
             <div id="search_bar">
                 <form action="/list" method="post">
                     <input name="search">
@@ -48,7 +48,8 @@
             </table>
         </div><br>
         {% if show %}
-            <a href="/list">SHOW ALL QUESTIONS</a>
+            <a href="/list">SHOW ALL QUESTIONS</a><br>
         {% endif %}
+        <a href="/users">SHOW USERS</a>
     </div>
 {% endblock %}

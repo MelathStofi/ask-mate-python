@@ -61,6 +61,17 @@ def get_answers_by_id(cursor, question_id):
     return answers
 
 
+@connection.connection_handler
+def get_comments_to_answers(cursor, question_id):
+    cursor.execute("""
+                        SELECT comment.answer_id, comment.message FROM comment
+                        JOIN answer ON comment.answer_id = answer.id
+                        WHERE %(question_id)s = answer.question_id;
+                        """,
+                   {'question_id': question_id})
+    comments = cursor.fetchall()
+    return comments
+
 
 @connection.connection_handler
 def get_answer_row(cursor,answer_id):
@@ -263,6 +274,14 @@ def get_questions_by_user_id(cursor, user_id):
     return user_questions
 
 
+@connection.connection_handler
+def get_all_users(cursor):
+    cursor.execute("""
+                    SELECT * FROM user_account
+                    """)
+    all_users=cursor.fetchall()
+    return all_users
+
 
 @connection.connection_handler
 def get_answered_questions_by_user_id(cursor, user_id):
@@ -297,3 +316,15 @@ def update_reputation(cursor, user_id, vote_value):
                     """,
                    {'user_id': user_id,
                     'vote_value': vote_value})
+
+
+@connection.connection_handler
+def get_user_by_id(cursor,user_id):
+    cursor.execute("""
+                    SELECT * FROM user_account
+                    WHERE id = %(user_id)s
+                    """,
+                   {'user_id':user_id})
+    user_info = cursor.fetchone()
+    return user_info
+

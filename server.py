@@ -34,12 +34,16 @@ def full_list():
 def display_question(question_id):
     question = data_manager.get_question_by_id(question_id)
     answers = data_manager.get_answers_by_id(question_id)
+    comments_to_answer = data_manager.get_comments_to_answers(question_id)
+    print(answers)
+    print(comments_to_answer)
     if request.url != request.referrer:
         data_manager.view_counter(question_id)
 
     return render_template('question.html',
                            question=question,
-                           answers=answers)
+                           answers=answers,
+                           comments_to_answer=comments_to_answer)
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
@@ -157,17 +161,40 @@ def login():
     return render_template('login.html')
 
 
+@app.route('/logout')
+def logout():
+    session.pop('username')
+    session.pop('user_id')
+    return redirect('/')
+
+
 @app.route('/user/<user_id>')
 def user_page(user_id):
-    username = session['username']
+    if session is True:
+        user_login = True
+        questions = data_manager.get_questions_by_user_id(user_id)
+        answered_questions = data_manager.get_answered_questions_by_user_id(user_id)
+        return render_template('user_page.html',
+                               questions=questions,
+                               user_login=user_login,
+                               answered_questions=answered_questions)
+
+    username = data_manager.get_user_by_id(user_id)
     questions = data_manager.get_questions_by_user_id(user_id)
     answered_questions = data_manager.get_answered_questions_by_user_id(user_id)
     # comments =
 
     return render_template('user_page.html',
-                           username=username,
                            questions=questions,
+                           username=username,
                            answered_questions=answered_questions)
+
+
+@app.route('/users')
+def all_users():
+    all_user_info = data_manager.get_all_users()
+
+    return render_template('users.html',all_users=all_user_info)
 
 
 if __name__ == '__main__':
