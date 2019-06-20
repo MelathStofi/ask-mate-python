@@ -174,10 +174,12 @@ def user_page(user_id):
         user_login = True
         questions = data_manager.get_questions_by_user_id(user_id)
         answered_questions = data_manager.get_answered_questions_by_user_id(user_id)
+        reputation = data_manager.get_reputation_by_user_id(user_id)
         return render_template('user_page.html',
                                questions=questions,
                                user_login=user_login,
-                               answered_questions=answered_questions)
+                               answered_questions=answered_questions,
+                               reputation = reputation)
 
     username = data_manager.get_user_by_id(user_id)
     questions = data_manager.get_questions_by_user_id(user_id)

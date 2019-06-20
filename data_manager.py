@@ -328,3 +328,13 @@ def get_user_by_id(cursor,user_id):
     user_info = cursor.fetchone()
     return user_info
 
+
+@connection.connection_handler
+def get_reputation_by_user_id(cursor, user_id):
+    cursor.execute("""
+                        SELECT reputation FROM user_account
+                        WHERE id = %(user_id)s
+                        """,
+                   {'user_id': user_id})
+    reputation = cursor.fetchone()
+    return reputation
