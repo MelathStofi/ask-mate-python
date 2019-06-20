@@ -7,7 +7,7 @@
 {% block content %}
     <form action={{ "/answer/" + answer_id + "/new-comment" }} method="post">
         <p>Comment:<br>
-        <textarea rows="5" cols="30" name="answer" required>{{ answer_row['message'] if answer_id }}</textarea>
+        <textarea rows="5" cols="30" name="comment" required></textarea>
         </p>
         <p>
             <button type="submit">Add comment

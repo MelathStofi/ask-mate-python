@@ -35,8 +35,6 @@ def display_question(question_id):
     question = data_manager.get_question_by_id(question_id)
     answers = data_manager.get_answers_by_id(question_id)
     comments_to_answer = data_manager.get_comments_to_answers(question_id)
-    print(answers)
-    print(comments_to_answer)
     if request.url != request.referrer:
         data_manager.view_counter(question_id)
 
@@ -109,6 +107,19 @@ def delete_answer(answer_id):
     answer = data_manager.get_answer_row(answer_id)
     data_manager.delete_answer(answer_id)
     return redirect(f'/question/{answer["question_id"]}')
+
+
+@app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
+def add_comment_to_answer(answer_id):
+    if request.method == 'POST':
+        comment = {'message': request.form['comment'],
+                   'user_id': session['user_id']}
+        question_id = data_manager.get_question_id_by_answer_id(answer_id)
+        data_manager.add_comment(comment, question_id['id'], answer_id)
+        return redirect('/')
+
+    return render_template('add_and_edit_comment_to_answer.html',
+                            answer_id=answer_id)
 
 
 @app.route("/question/<question_id>/vote-up", methods=["GET", "POST"])
