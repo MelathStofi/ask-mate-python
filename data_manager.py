@@ -263,6 +263,14 @@ def get_questions_by_user_id(cursor, user_id):
     return user_questions
 
 
+@connection.connection_handler
+def get_all_users(cursor):
+    cursor.execute("""
+                    SELECT * FROM user_account
+                    """)
+    all_users=cursor.fetchall()
+    return all_users
+
 
 @connection.connection_handler
 def get_answered_questions_by_user_id(cursor, user_id):
@@ -275,3 +283,15 @@ def get_answered_questions_by_user_id(cursor, user_id):
                    {'user_id': user_id})
     user_questions = cursor.fetchall()
     return user_questions
+
+
+@connection.connection_handler
+def get_user_by_id(cursor,user_id):
+    cursor.execute("""
+                    SELECT * FROM user_account
+                    WHERE id = %(user_id)s
+                    """,
+                   {'user_id':user_id})
+    user_info = cursor.fetchone()
+    return user_info
+

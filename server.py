@@ -159,15 +159,31 @@ def logout():
 
 @app.route('/user/<user_id>')
 def user_page(user_id):
-    username = session['username']
+    if session is True:
+        user_login = True
+        questions = data_manager.get_questions_by_user_id(user_id)
+        answered_questions = data_manager.get_answered_questions_by_user_id(user_id)
+        return render_template('user_page.html',
+                               questions=questions,
+                               user_login=user_login,
+                               answered_questions=answered_questions)
+
+    username = data_manager.get_user_by_id(user_id)
     questions = data_manager.get_questions_by_user_id(user_id)
     answered_questions = data_manager.get_answered_questions_by_user_id(user_id)
     # comments =
 
     return render_template('user_page.html',
-                           username=username,
                            questions=questions,
+                           username=username,
                            answered_questions=answered_questions)
+
+
+@app.route('/users')
+def all_users():
+    all_user_info = data_manager.get_all_users()
+
+    return render_template('users.html',all_users=all_user_info)
 
 
 if __name__ == '__main__':
