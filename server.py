@@ -111,6 +111,19 @@ def delete_answer(answer_id):
     return redirect(f'/question/{answer["question_id"]}')
 
 
+@app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
+def add_comment_to_answer(answer_id):
+    if request.method == 'POST':
+        comment = {'message': request.form['comment'],
+                   'user_id': session['user_id']}
+        question_id = data_manager.get_question_id_by_answer_id(answer_id)
+        data_manager.add_comment(comment, question_id['id'], answer_id)
+        return redirect('/')
+
+    return render_template('add_and_edit_comment_to_answer.html',
+                            answer_id=answer_id)
+
+
 @app.route("/question/<question_id>/vote-up", methods=["GET", "POST"])
 @app.route("/question/<question_id>/vote-down", methods=["GET", "POST"])
 def voting(question_id):
@@ -170,10 +183,12 @@ def user_page(user_id):
         user_login = True
         questions = data_manager.get_questions_by_user_id(user_id)
         answered_questions = data_manager.get_answered_questions_by_user_id(user_id)
+        reputation = data_manager.get_reputation_by_user_id(user_id)
         return render_template('user_page.html',
                                questions=questions,
                                user_login=user_login,
-                               answered_questions=answered_questions)
+                               answered_questions=answered_questions,
+                               reputation = reputation)
 
     username = data_manager.get_user_by_id(user_id)
     questions = data_manager.get_questions_by_user_id(user_id)

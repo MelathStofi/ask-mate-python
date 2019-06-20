@@ -146,8 +146,21 @@ def update_answer(cursor,answer,answer_id):
                         SET message = %(message)s, image = %(image)s
                         WHERE %(answer_id)s = id;
                         """,
-                   {'message':answer['message'],'image':answer['image'],
+                   {'message':answer['message'],
+                    'image':answer['image'],
                     'answer_id':answer_id})
+
+
+@connection.connection_handler
+def add_comment(cursor, comment, question_id, answer_id):
+    cursor.execute("""
+                        INSERT INTO comment (user_id, question_id, answer_id, message, submission_time, edited_count)
+                        VALUES (%(user_id)s, %(question_id)s, %(answer_id)s, %(message)s, CURRENT_TIMESTAMP)
+                        """,
+                   {'user_id': comment['user_id'],
+                    'question_id': question_id,
+                    'answer_id': answer_id,
+                    'message': comment['message']})
 
 
 @connection.connection_handler
@@ -328,3 +341,13 @@ def get_user_by_id(cursor,user_id):
     user_info = cursor.fetchone()
     return user_info
 
+
+@connection.connection_handler
+def get_reputation_by_user_id(cursor, user_id):
+    cursor.execute("""
+                        SELECT reputation FROM user_account
+                        WHERE id = %(user_id)s
+                        """,
+                   {'user_id': user_id})
+    reputation = cursor.fetchone()
+    return reputation
