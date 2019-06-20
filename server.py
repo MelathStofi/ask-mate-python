@@ -110,11 +110,15 @@ def delete_answer(answer_id):
 @app.route("/question/<question_id>/vote-up", methods=["GET", "POST"])
 @app.route("/question/<question_id>/vote-down", methods=["GET", "POST"])
 def voting(question_id):
+    user_id = data_manager.get_user_id_by_question(question_id)
     question = data_manager.get_question_by_id(question_id)
     if 'vote-up' in str(request.url_rule):
         data_manager.voting(question_id, 1)
+        print(user_id)
+        data_manager.update_reputation(user_id['user_id'], 5)
     elif 'vote-down' in str(request.url_rule):
         data_manager.voting(question_id, -1)
+        data_manager.update_reputation(user_id['user_id'], -2)
     return redirect(url_for("display_question",
                             question_id=question['id']))
 

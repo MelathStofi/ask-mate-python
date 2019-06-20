@@ -239,8 +239,8 @@ def add_account(cursor, account):
         return "Username already in use!"
     else:
         cursor.execute("""  
-                            INSERT INTO user_account (username, password, registration_time) 
-                            VALUES (%(username)s, %(password)s, CURRENT_TIMESTAMP)
+                            INSERT INTO user_account (username, password, registration_time, reputation) 
+                            VALUES (%(username)s, %(password)s, CURRENT_TIMESTAMP, 0)
                             """,
                        {'username': account['username'],
                         'password': password_hash})
@@ -275,3 +275,25 @@ def get_answered_questions_by_user_id(cursor, user_id):
                    {'user_id': user_id})
     user_questions = cursor.fetchall()
     return user_questions
+
+
+@connection.connection_handler
+def get_user_id_by_question(cursor,question_id):
+    cursor.execute("""
+                    SELECT user_id from question
+                    WHERE id = %(question_id)s
+                    """,
+                   {'question_id': question_id})
+    user_id = cursor.fetchone()
+    return user_id
+
+
+@connection.connection_handler
+def update_reputation(cursor, user_id, vote_value):
+    cursor.execute("""
+                    UPDATE user_account SET
+                    reputation = reputation + %(vote_value)s
+                    WHERE id = %(user_id)s 
+                    """,
+                   {'user_id': user_id,
+                    'vote_value': vote_value})
