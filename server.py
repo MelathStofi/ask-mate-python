@@ -35,8 +35,6 @@ def display_question(question_id):
     question = data_manager.get_question_by_id(question_id)
     answers = data_manager.get_answers_by_id(question_id)
     comments_to_answer = data_manager.get_comments_to_answers(question_id)
-    print(answers)
-    print(comments_to_answer)
     if request.url != request.referrer:
         data_manager.view_counter(question_id)
 
@@ -55,7 +53,8 @@ def add_question():
                     'user_id': session['user_id']}
         data_manager.add_question(question)
         return redirect('/')
-    return render_template('add_and_edit_question.html')
+    update_question_row = True
+    return render_template('add_and_edit_question.html',update_question_row=update_question_row)
 
 
 @app.route('/edit/<question_id>', methods=['GET','POST'])
@@ -66,6 +65,7 @@ def update_question(question_id):
         data_manager.update_story(updated_question,question_id)
         return redirect(f'/question/{question_id}')
     update_question_row = data_manager.get_data_row(question_id)
+    print(update_question_row)
     return render_template('add_and_edit_question.html',
                            question_id=question_id,
                            update_question_row=update_question_row)
@@ -118,7 +118,6 @@ def voting(question_id):
     question = data_manager.get_question_by_id(question_id)
     if 'vote-up' in str(request.url_rule):
         data_manager.voting(question_id, 1)
-        print(user_id)
         data_manager.update_reputation(user_id['user_id'], 5)
     elif 'vote-down' in str(request.url_rule):
         data_manager.voting(question_id, -1)
@@ -126,9 +125,6 @@ def voting(question_id):
     return redirect(url_for("display_question",
                             question_id=question['id']))
 
-        # data_manager.voting(question_id, )
-        # return redirect(url_for("route_display_question",
-        #                         question_id=question['id']))
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
