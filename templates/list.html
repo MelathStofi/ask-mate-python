@@ -47,9 +47,13 @@
                 </tbody>
             </table>
         </div><br>
-        {% if show %}
-            <a href="/list">SHOW ALL QUESTIONS</a><br>
-        {% endif %}
-        <a href="/users">SHOW USERS</a>
+        <div id="show_all_questions">
+            {% if show %}
+                <a href="/list">SHOW ALL QUESTIONS</a><br>
+            {% endif %}
+        </div>
+        <div id="show_users">
+            <a href="/users">SHOW USERS</a>
+        </div>
     </div>
 {% endblock %}

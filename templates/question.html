@@ -13,8 +13,10 @@
                 {% if session %}
                     <button><a href="/question/{{question['id']}}/vote-up">Vote up</a></button><br>
                     <button><a href="/question/{{question['id']}}/vote-down">Vote down</a></button><br>
-                    <a id="update" href="/edit/{{ question['id'] }}">Update this question</a><br>
-                    <a class="delete" href="/delete_question/{{ question['id'] }}">Delete Question</a>
+                    {% if session['user_id'] == question['user_id'] %}
+                        <a id="update" href="/edit/{{ question['id'] }}">Update this question</a><br>
+                        <a class="delete" href="/delete_question/{{ question['id'] }}">Delete Question</a>
+                    {% endif %}
                 {% endif %}
             </div>
             <h2>Question:</h2><br>
@@ -37,11 +39,13 @@
                                     {%if row['image'] %}
                                         <td><img src="{{ row['image'] }}" height="200" width="300"></td>
                                     {% endif %}
-                                    <td>
-                                        <a href="/answer/{{ row['id'] }}/edit">Edit answer</a><br>
-                                        <a class="delete" href="/delete_answer/{{ row['id'] }}">Delete answer</a><br>
-                                        <a href="/answer/{{ row['id'] }}/new-comment">Comment</a>
-                                    </td>
+                                        {% if session['user_id'] == row['user_id'] %}
+                                            <td>
+                                                <a href="/answer/{{ row['id'] }}/edit">Edit answer</a><br>
+                                                <a class="delete" href="/delete_answer/{{ row['id'] }}">Delete answer</a><br>
+                                                <a href="/answer/{{ row['id'] }}/new-comment">Comment</a>
+                                            </td>
+                                        {% endif %}
                                 </tr>
                                 {% if row['id'] == comments_to_answer['answer_id'] %}
                                     <tr>

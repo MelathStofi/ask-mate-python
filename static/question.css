@@ -1,8 +1,9 @@
 body {
-    font-family: Consolas;
+    font-family: 'Mali', cursive;
     background-color: pink;
     margin-left: 20em;
     margin-right: 20em;
+    margin-bottom: 10em;
 }
 
 #page_logo {
@@ -15,8 +16,13 @@ body {
     color: red;
 }
 
+a:link{
+    text-decoration: none;
+}
+
 a:hover {
     background-color: #ff9999;
+    border-radius: 6px;
 }
 
 table {
@@ -53,7 +59,7 @@ textarea {
 }
 
 #header {
-    margin-left: calc(100% - 5em);
+    margin-left: calc(100% - 6em);
 }
 
 .card {
@@ -87,5 +93,17 @@ select {
 }
 
 h2 {
+    color: #ff9999;
+    border-color: magenta;
+    text-shadow: 0.5px 0.5px 0.5px rgba(0, 0, 0, .9);
+}
 
+#show_all_questions {
+    margin-left: calc(100% - 99%);
+    float: left;
+}
+
+#show_users {
+    margin-right: calc(100% - 99%);
+    float: right;
 }

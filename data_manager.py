@@ -154,7 +154,7 @@ def update_answer(cursor,answer,answer_id):
 @connection.connection_handler
 def add_comment(cursor, comment, question_id, answer_id):
     cursor.execute("""
-                        INSERT INTO comment (user_id, question_id, answer_id, message, submission_time, edited_count)
+                        INSERT INTO comment (user_id, question_id, answer_id, message, submission_time)
                         VALUES (%(user_id)s, %(question_id)s, %(answer_id)s, %(message)s, CURRENT_TIMESTAMP)
                         """,
                    {'user_id': comment['user_id'],

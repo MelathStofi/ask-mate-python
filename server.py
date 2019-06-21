@@ -118,10 +118,10 @@ def add_comment_to_answer(answer_id):
                    'user_id': session['user_id']}
         question_id = data_manager.get_question_id_by_answer_id(answer_id)
         data_manager.add_comment(comment, question_id['id'], answer_id)
-        return redirect('/')
+        return redirect(f'/question/{question_id["id"]}')
 
     return render_template('add_and_edit_comment_to_answer.html',
-                            answer_id=answer_id)
+                           answer_id=answer_id)
 
 
 @app.route("/question/<question_id>/vote-up", methods=["GET", "POST"])
@@ -145,8 +145,10 @@ def registration():
         account = {'username': request.form['username'],
                    'password': request.form['password']}
         exists = data_manager.add_account(account)
-
-        return render_template('registration.html', account=account, exists=exists)
+        if exists is None:
+            return render_template('login.html')
+        else:
+            return render_template('registration.html', account=account, exists=exists)
 
     return render_template('registration.html')
 
