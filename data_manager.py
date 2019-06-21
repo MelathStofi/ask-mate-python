@@ -272,7 +272,10 @@ def add_account(cursor, account):
 
 def is_account_verified(account):
     account_search = search_account(account['username'])
-    is_verified = verify_password(account['password'],account_search['password'])
+    if account_search is None:
+        is_verified = False
+    else:
+        is_verified = verify_password(account['password'],account_search['password'])
     return is_verified
 
 
