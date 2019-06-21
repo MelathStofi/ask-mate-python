@@ -49,17 +49,15 @@
                                             </td>
                                         {% endif %}
                                 </tr>
-                                {% if row['id'] == comments_to_answer['answer_id'] %}
-                                    <tr>
-                                        <td>
+                                {% for comment in comments_to_answer %}
+                                    <tr><td>
+                                    {% if row['id'] == comment['answer_id'] %}
                                             <ul>
-                                                {% for comment in comments_to_answer %}
-                                                    <li>{{ comment['message'] }}</li>
-                                                {% endfor %}
+                                                <li>{{ comment['message'] }}</li>
                                             </ul>
-                                        </td>
-                                    </tr>
-                                {% endif %}
+                                    {% endif %}
+                                    </td></tr>
+                                {% endfor %}
                             {% endfor %}
                         </tbody>
                     </table>
