@@ -1,32 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>{{ "Add" if not is_new else "Update"}} Question</title>
-        <link rel="icon" type="image/ico" href="/static/only_logo.png" />
-        <link rel="stylesheet" type="text/css" href="/static/liststyle.css">
-    </head>
-    <body>
-        <a id="logo" href="/"><img src="/static/logo.png"></a>
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ "Update Question" if question_id else "Add Question" }}
+{% endblock %}
+
+{% block content %}
+    {% if session_check == True %}
+
         <form action="/add-question" method="post">
             <h2><p>Add Question</p></h2>
             <p>
                 Question:<br>
-                <input id="question-input" name="title" required>
+                <input id="question-input" name="title" required maxlength="30" size="50" >
             </p>
             <p>
                 Details:<br>
-                <textarea id="details-input" name="message" rows="5" cols="30"></textarea>
+                <textarea id="details-input" name="message" rows="10" cols="50"></textarea>
             </p>
             <p>
                 Image URL:<br>
-                <input id = "image-url" name="image" type="url">
+                <input id="image-input" name="image" type="url">
             </p>
             <p>
-                <button type="submit">
-                    Add Question
-                </button>
+                <button type="submit" value="Add question">Add question</button>
             </p>
         </form>
-    </body>
-</html>
+    {% else %}
+        <h1>Sorry, you can't do that :/ </h1><br>
+        <h2>Please Login if you want to edit or add new question!</h2>
+    {% endif %}
+{% endblock %}
